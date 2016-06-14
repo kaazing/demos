@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="xIgnite-demo" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="UTF-8">
+	<title>Kaazing xIgnite API Demo</title>
+	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="node_modules/angularjs-slider/dist/rzslider.css">
+	<link rel="stylesheet" href="node_modules/angular-ui-switch/angular-ui-switch.css">
+	<link rel="stylesheet" id="kaazing-css" href="//kaazing.com/wp-content/themes/kaazing/assets/css/kaazing.min.css?ver=0.1.0" type="text/css" media="all">
+	<link rel="stylesheet" href="css/app.css">
+	<script src="node_modules/jquery/dist/jquery.js"></script>
+	<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="node_modules/angular/angular.js"></script>
+	<script src="node_modules/angularjs-slider/dist/rzslider.js"></script>
+	<script src="node_modules/angular-ui-switch/angular-ui-switch.js"></script>
+	<script src="node_modules/angular-local-storage/dist/angular-local-storage.js"></script>
+	<script src="node_modules/requirejs/require.js"></script>
+	<script src="node_modules/kaazing-javascript-universal-client/node_modules/kaazing-javascript-jms-client/JmsClient.js"></script>
+	<script src="node_modules/kaazing-javascript-universal-client/JavascriptUniversalClientNPM.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="js/app.js"></script>
+</head>
+<body>
+<header>
+<div class="row">
+    <section>
+        <div class="col-md-3">
+            <img style="-webkit-user-select: none" src="https://s3.amazonaws.com/10up-new/wp-content/uploads/20160112214032/Kaazing-logo-115x115.png"/>
+        </div>
+        <div class="col-md-6">
+            <h1>Streaming FX Demo</h1>
+            <h4>WebSocket vs. REST</h4>
+        </div>
+    </section>
+</div>
+</header>
+<div class="kaazing-cta download">
+	<p><a href="/getting-started" class="button cta-button">Build your app</a><a href="/download" class="button cta-button">Download</a><a href="/doc/5.0/index.html" class="button cta-button">Learn more</a></p>
+	<p></p>
+</div>
+<div class="container" ng-controller="mainCtl">
+	<div class="row introbox">
+		<div class="panel panel-default">
+			<div class="panel-heading">This demo highlights the performance and accuracy benefits of WebSocket over REST
+            for a streaming data application: real-time foreign currency exchange rates. Please go ahead and
+            pick currency pairs from the following list:</div>
+			<div class="panel-body symbol-panel">
+				<div ng-repeat="currency in currencies" class="panel panel-default col-md-1 symbol-holder">
+					<div class="panel-body symbol">
+						<switch ng-model="currency.enabled" ng-change="enabledDisabled(currency)" class="blue"></switch>
+						<img class="flag" ng-class="{'flag-disabled':!currency.enabled}" ng-src="images/{{currency.image}}"/>
+						<span class="symbol-text-enabled" ng-class="{'symbol-text-disabled':!currency.enabled}">{{currency.symbol}}</span>
+					</div>
+				</div>
+			</div>
+            <div class="panel-footer">
+                <h4>Real-time data provided by <a href="http://xignite.com/forex" target="_blank">
+                    <img src="images/xignite-logo-text.png" alt="Xignite - Global Financial Market Data On-Demand" style="height:25px; width:100px;"></a>
+                </h4>
+            </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<p>
+                    On the left of the table below, prices are <em>pushed</em> from the server to your browser using WebSocket.
+                    On the right side of the table, your browser is <em>polling</em> at a rate you specify to get the same
+                    exchange rates using a REST endpoint. The REST side will always be slightly behind the WebSocket side.
+                    The shorter the polling interval the closer REST will get but at the expense of more requests to the server.
+                </p>
+				<div class="col-md-6">
+					<div class="panel panel-default wspanel">
+						<div class="panel-heading">
+                            <h4>Using WebSocket</h4>
+						</div>
+						<div class="panel-body">
+							<div ng-repeat="currency in currencies | filter: { enabled: true }" class="panel panel-default col-md-6">
+								<div class="panel-body">
+									<div class="container symbol-data">
+										<div class="row">
+											<img class="flag" ng-class="{'flag-disabled':!currency.enabled}" ng-src="images/{{currency.image}}"/>
+											<span class="symbol-text-enabled" ng-class="{'symbol-text-disabled':!currency.enabled}">{{currency.symbol}}</span>
+										</div>
+                                        <div class="row">
+                                            <span ng-class="{'symbol-data-minus':currency.webSocket.bidChange<0, 'symbol-data-plus':currency.webSocket.bidChange>0}">
+                                                <b>BID:</b>
+                                                <span ng-if="currency.webSocket.bid">{{currency.webSocket.bid}}({{currency.webSocket.bidChange}})
+                                                    <span ng-if="currency.webSocket.bidChange!=0" class="tick-up" ng-class="{'tick-down':currency.webSocket.bidChange<0}">
+                                                        <span ng-if="currency.webSocket.bidChange==0"></span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="row">
+                                            <span ng-class="{'symbol-data-minus':currency.webSocket.askChange<0, 'symbol-data-plus':currency.webSocket.askChange>0}">
+                                                <b>ASK:</b>
+                                                <span ng-if="currency.webSocket.ask">{{currency.webSocket.ask}}({{currency.webSocket.askChange}})
+                                                    <span ng-if="currency.webSocket.askChange!=0" class="tick-up" ng-class="{'tick-down':currency.webSocket.askChange<0}">
+                                                        <span ng-if="currency.webSocket.askChange==0">-</span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </div>
+									</div>
+								</div>
+							</div>
+                            <div style="clear:both"></div>
+                            <div class="col-md-6">
+                                <h5>Server Requests: {{getWsServersAPICalls()}}/s</h5>
+                            </div>
+                            <div style="clear:both"></div>
+                            <div class="col-md-6">
+                                <div id="websocket_chart_data_div" class="chartCenter"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="websocket_chart_changes_div" class="chartCenter"></div>
+                            </div>
+                            <div style="clear:both"></div>
+                            <div class="col-md-12">
+                                <h5>Estimated Server traffic: <i>{{getWsServersLoad()}} Mbps</i></h5>
+                            </div>
+						</div>
+                        <div class="panel-footer panel-danger" ng-if="wsErrors!=null">
+                            {{wsErrors}}
+                        </div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-default RESTpanel">
+                        <div class="panel-heading">
+                            <h4>Using REST {{speedSlider.value}} msec between calls</h4>
+                        </div>
+						<div class="panel-body">
+							<div ng-repeat="currency in currencies | filter: { enabled: true }" class="panel panel-default col-md-6" ng-class="{'discrepancy':currency.enabled&&currency.mismatch}">
+								<div class="panel-body">
+									<div class="container symbol-data">
+										<div class="row">
+											<img class="flag" ng-class="{'flag-disabled':!currency.enabled}" ng-src="images/{{currency.image}}"/>
+											<span class="symbol-text-enabled" ng-class="{'symbol-text-disabled':!currency.enabled}">{{currency.symbol}}</span>
+										</div>
+                                        <div class="row">
+                                            <span ng-class="{'symbol-data-minus':currency.rest.bidChange<0,'symbol-data-plus':currency.rest.bidChange>0}">
+                                                <b>BID:</b>
+                                                <span ng-if="currency.rest.bid">{{currency.rest.bid}}({{currency.rest.bidChange}})
+                                                    <span ng-if="currency.rest.bidChange!=0" class="tick-up" ng-class="{'tick-down':currency.rest.bidChange<0}">
+                                                        <span ng-if="currency.rest.bidChange==0">-</span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="row">
+                                            <span ng-class="{'symbol-data-minus':currency.rest.askChange<0, 'symbol-data-plus':currency.rest.askChange>0}">
+                                                <b>ASK:</b>
+                                                <span ng-if="currency.rest.ask">{{currency.rest.ask}}({{currency.rest.askChange}})
+                                                    <span ng-if="currency.rest.askChange!=0" class="tick-up" ng-class="{'tick-down':currency.rest.askChange<0}">
+                                                        <span ng-if="currency.rest.askChange==0">-</span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </div>
+									</div>
+								</div>
+							</div>
+                            <div style="clear:both"></div>
+                            <div class="col-md-12">
+                                <h5>Server Requests: {{getRestServersAPICalls()}}/s</h5>
+                            </div>
+                            <div style="clear:both"></div>
+                            <div class="col-md-6">
+                                <div id="rest_chart_data_div" class="chartCenter"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="rest_chart_changes_div" class="chartCenter"></div>
+                            </div>
+                            <div style="clear:both"></div>
+                            <div class="col-md-12">
+                                <h5>Estimated Server traffic: <i>{{getRestServersLoad()}} Mbps</i></h5>
+                            </div>
+                            <div class="col-md-12"><h5>Adjust REST Polling Interval (ms)</h5>
+                                <rzslider rz-slider-model="speedSlider.value" rz-slider-options="speedSlider.options"></rzslider>
+                            </div>
+						</div>
+                        <div class="panel-footer panel-danger" ng-if="restErrors!=null">
+                            {{restErrors}}
+                        </div>
+					</div>
+				</div>
+                <div class="col-md-12">
+                    <p>The charts above simulate the server impact of increasing the number of simultaneous
+                        users</p>
+                    <label for="restUsersSelect"> Number of users: </label>
+                    <select name="restUsersSelect" id="restUsersSelect" ng-model="totalUsers"
+                            class=".form-control">
+                        <option>1000</option>
+                        <option>10000</option>
+                        <option>100000</option>
+                        <option>1000000</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+    <div class="row">
+        <div class="col-md-12 hidden">
+            <div class="panel panel-default chartLayout">
+                <div id="data_consistency_chart_div" class="chartCenter"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

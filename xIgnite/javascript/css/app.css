@@ -1,0 +1,196 @@
+body {
+    overflow-x: hidden;
+    background-color: #514f4d;
+}
+
+header {
+    background: #000;
+    color: #fff;
+}
+
+.introbox {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.wspanel {
+    border-color: #fd904b;
+}
+
+.wspanel .panel-heading {
+    color: #fff;
+    border-color: #fd904b;
+    background-color: #fd904b;
+}
+
+.RESTpanel {
+    border-color: #3B6F8F;
+}
+
+.RESTpanel .panel-heading {
+    color: #fff;
+    border-color: #3B6F8F;
+    background-color: #3B6F8F;
+}
+
+.row-height {
+	min-height: 55px;
+	height: 55px;
+	display: table;
+	table-layout: fixed;
+	overflow: hidden;
+}
+
+.header-text {
+	display:table-cell;
+	vertical-align:middle;
+	text-align:center;
+}
+
+.symbol{
+	padding-left:0;
+	padding-right:0;
+}
+
+.symbol-holder{
+	margin-bottom:0;
+}
+
+.symbol-panel{
+	padding-bottom: 0;
+	padding-top: 8px;
+}
+
+.flag{
+	vertical-align: top;
+	height: 15px;
+	width: 20px;
+	margin-top: 3px;
+}
+
+.flag-disabled{
+	opacity: 0.5;
+	filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+.switch {
+	/* frame */
+	vertical-align: top;
+	width: 30px;
+	height: 20px;
+	margin-right: 2px;
+}
+.switch small {
+	width: 20px;
+	height: 20px;
+}
+.switch.checked {
+	/* frame when enabled */
+
+}
+.switch.checked small {
+	left: 10px;
+}
+/*wider switch text moves small further to the right*/
+.switch.wide.checked small {
+
+}
+
+.symbol-text-enabled{
+	font-weight: bold;
+	color: black;
+}
+
+.symbol-text-disabled{
+	font-weight: normal;
+	color: lightgray;
+}
+
+.symbol-data{
+	padding-left:0;
+	padding-right:0;
+}
+
+.symbol-data-plus{
+	color: green;
+}
+
+.symbol-data-minus{
+	color: red;
+}
+
+.tick-up:before{
+	content: "\25B2";
+	color: green;
+}
+
+.tick-down:before{
+	content: "\25BC";
+	color: red;
+}
+
+.tick-none:before{
+	content: "-";
+	color: black;
+}
+
+div.chartLayout
+{
+	text-align: center;
+}
+
+div.chartCenter
+{
+	text-align: center;
+	display: table-cell;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.vertical-align{
+	display: flex;
+	align-items: center;
+}
+
+.header {
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 10px;
+}
+
+h3 {
+	margin-top: 5px;
+}
+section {
+	text-align: center;
+}
+
+
+.discrepancy{
+	border: dotted red 1px;
+}
+
+.panel{
+	margin-bottom: 8px;
+}
+
+rzslider .rz-bubble, rzslider .rz-bubble.rz-limit {
+    color: #000;
+}
+
+.panel-success {
+    font-size: 0.8em;
+}
+
+.panel-danger {
+    color: red;
+    font-size: 0.8em;
+}
+
+h1, h2, h3, h4, h5 {
+	color: #FFFFFF;
+}
+
+.download {
+	display: block;
+}

@@ -1,0 +1,23 @@
+{
+  "name": "xignite-demo",
+  "version": "1.0.0",
+  "description": "Streaming stocks application for xIgnite",
+  "main": "index.html",
+  "keywords": [
+    "xignite",
+    "websockets"
+  ],
+  "author": "Kaazing Corporation",
+  "repository": "https://github.com/kaazing/engineering-services.xignite/tree/develop/javascript/xignite-demo",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-local-storage": "^0.2.7",
+    "angular-ui-switch": "^0.1.1",
+    "angularjs-slider": "^2.10.3",
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.1",
+    "kaazing-javascript-universal-client": "^1.0.3",
+    "requirejs": "^2.2.0"
+  }
+}

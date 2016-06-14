@@ -1,0 +1,10 @@
+list.currencies=subscribed-currencies
+currency.counter.prefix=currency-counter
+xignite.api.token=<your xIgnite api token>
+xignite.api.encryption.key=<your xIgnite API Encryption key>
+xignite.api.encryption.iv=<your xIgnite API Encryption IV>
+xignite.api.userid=<your xIngine user Id>
+xignite.currency.api.url=https://kaazing.xignite.com/xGlobalCurrencies.json/GetRealTimeRates?
+poll.frequency.msec=200
+cleanup.delay.sec=30
+logging.file=/var/log/data-poller.log

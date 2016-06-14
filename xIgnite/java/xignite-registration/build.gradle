@@ -1,0 +1,43 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+version = '1.2'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Xignite Registration',
+                   'Implementation-Version': version
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    compile 'redis.clients:jedis:2.7.3'
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.3'
+	compile 'org.apache.httpcomponents:fluent-hc:4.5.1'
+    compile files('/Users/romans/workspace/kaazing-enterprise-gateway-5.0.1/lib/gateway.server.spi.jar','/Users/romans/workspace/kaazing-enterprise-gateway-5.0.1/lib/enterprise.gateway.service.jms.spi.jar')
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
+task copyDeps(type: Copy) {
+	from (configurations.compile) {
+		include "*.jar"
+	}
+	into rootProject.rootDir.getAbsolutePath()+"/lib"
+}
