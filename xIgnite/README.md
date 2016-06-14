@@ -1,4 +1,4 @@
 # Streaming FX demo using xIgnite Services
 
 
-![alt text](xIgnight.png "Description goes here")
+![alt text](xIgnite.png "Description goes here")
