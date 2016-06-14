@@ -5,4 +5,3 @@ Xignite provides cloud-based financial market data APIs to help emerging compani
 ![alt text](xIgnite.png "Description goes here")
 
 
-On the left of the table below, prices are pushed from the server to your browser using WebSocket. On the right side of the table, your browser is polling at a rate you specify to get the same exchange rates using a REST endpoint. The REST side will always be slightly behind the WebSocket side. The shorter the polling interval the closer REST will get but at the expense of more requests to the server.
