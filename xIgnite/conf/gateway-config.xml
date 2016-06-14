@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2007-2014, Kaazing Corporation. All rights reserved. -->
+<gateway-config xmlns="http://xmlns.kaazing.org/2014/09/gateway">
+   <!-- ############################################################################# 
+		############################################################################# 
+		Kaazing WebSocket Gateway Configuration File This configuration file identifies 
+		all the possible services and associated security and management that flow 
+		through Kaazing WebSocket Gateway. Refer to the "Setting Up Kaazing WebSocket 
+		Gateway" document for basic configuration information. From the table of 
+		contents, click "Configuration Element Index" for a detailed list and links 
+		to descriptions of each element in this configuration file. ############################################################################# 
+		############################################################################# -->
+   <!-- Property defaults Specify the default values for properties which will 
+		be substituted when the Gateway starts. You can replace any values in this 
+		configuration file with a property using dollar-sign and curly brace format 
+		demonstrated in the <accept> tag of the echo service below. Starting the 
+		Gateway replaces all instances of property-name with the value you specify 
+		in this section. To override property default values, you can specify properties 
+		on the Java command line by setting the GATEWAY_OPTS environment variable 
+		before starting the Gateway. Search the documentation for "Configure Kaazing 
+		WebSocket Gateway Using the GATEWAY_OPTS Environment Variable" for more examples 
+		and a list of the properties you can set. -->
+   <properties>
+      <property>
+         <name>gateway.hostname</name>
+         <value>localhost</value>
+      </property>
+      <property>
+         <name>gateway.base.port</name>
+         <value>8000</value>
+      </property>
+      <property>
+         <name>gateway.extras.port</name>
+         <value>8001</value>
+      </property>
+   </properties>
+   <!-- Echo service The echo service is a service that receives a string of 
+		characters through a WebSocket and returns the same characters to the sender. 
+		The service "echoes" any input. This service is primarily used for validating 
+		the basic Gateway configuration. -->
+   <service>
+      <name>echo</name>
+      <description>Simple echo service</description>
+      <accept>ws://${gateway.hostname}:${gateway.extras.port}/echo</accept>
+      <type>echo</type>
+      <cross-site-constraint>
+         <allow-origin>*</allow-origin>
+      </cross-site-constraint>
+   </service>
+   <!-- Directory service The directory service is a service that exposes a 
+		directory of files. It is used to host static files accessed via the embedded 
+		web server within the Kaazing WebSocket Gateway. For example, the Kaazing 
+		'home' page and all of the Kaazing developer and administration documentation 
+		in the Gateway distribution are accessed through this service. The <directory> 
+		tag specifies the path of your static files relative to GATEWAY_HOME/web, 
+		where GATEWAY_HOME is the directory where you installed the Kaazing WebSocket 
+		Gateway. Note: An absolute path cannot be specified. -->
+   <service>
+      <name>base-directory</name>
+      <description>Directory service for base files</description>
+      <accept>http://${gateway.hostname}:${gateway.base.port}/</accept>
+      <type>directory</type>
+      <properties>
+         <directory>/extras</directory>
+         <welcome-file>index.html</welcome-file>
+         <error-pages-directory>/error-pages</error-pages-directory>
+         <options>indexes</options>
+      </properties>
+      <!-- <authorization-constraint> <require-role>AUTHORIZED</require-role> 
+			</authorization-constraint> -->
+   </service>
+   <service>
+      <name>extras-directory</name>
+      <description>Directory service for demo (extras) files</description>
+      <accept>http://${gateway.hostname}:${gateway.extras.port}/</accept>
+      <type>directory</type>
+      <properties>
+         <directory>/extras</directory>
+         <welcome-file>index.html</welcome-file>
+         <options>indexes</options>
+      </properties>
+      <!-- <authorization-constraint> <require-role>AUTHORIZED</require-role> 
+			</authorization-constraint> -->
+   </service>
+   <service>
+      <name>commandcenter-directory</name>
+      <description>Directory service for the Command Center files</description>
+      <accept>http://${gateway.hostname}:${gateway.base.port}/commandcenter</accept>
+      <type>directory</type>
+      <properties>
+         <directory>/commandcenter</directory>
+         <welcome-file>index.html</welcome-file>
+         <error-pages-directory>/error-pages</error-pages-directory>
+         <options>indexes</options>
+      </properties>
+   </service>
+   <!-- ############################################################################# 
+		############################################################################# 
+		Security configuration ############################################################################# 
+		############################################################################# -->
+   <!-- Security configuration -->
+   <security>
+      <!-- The keystore element is used to configure the keystore that contains 
+			encryption keys for secure communications with Kaazing WebSocket Gateway. -->
+      <keystore>
+         <type>JCEKS</type>
+         <file>keystore.db</file>
+         <password-file>keystore.pw</password-file>
+      </keystore>
+      <!-- The truststore element is used to configure the truststore that contains 
+			digital certificates for certificate authorities trusted by Kaazing WebSocket 
+			Gateway. -->
+      <truststore>
+         <file>truststore.db</file>
+      </truststore>
+      <!-- This is the element that associates an authenticated user with a set 
+			of authorized roles. -->
+      <realm>
+         <name>xignite-ws</name>
+         <description>Kaazing WebSocket Gateway for xIgnite</description>
+         <!-- This is the element that specifies how authentication of users is 
+				undertaken for the realm. -->
+         <authentication>
+            <http-challenge-scheme>Application Token</http-challenge-scheme>
+            <http-header>Xignite-Auth-Header</http-header>
+            <http-query-parameter>token</http-query-parameter>
+            <http-cookie>Xignite-Auth</http-cookie>
+            <session-timeout>28800 seconds</session-timeout>
+            <login-modules>
+               <login-module>
+                  <type>class:com.kaazing.xignite.registration.ReauthXigniteWsDemoLoginModule</type>
+                  <success>required</success>
+                  <options>
+                     <redis.host>localhost</redis.host>
+                     <list.currencies>subscribed-currencies</list.currencies>
+                     <currency.counter.prefix>currency-counter</currency.counter.prefix>
+                     <user.currencies.prefix>user-currencies</user.currencies.prefix>
+                  </options>
+               </login-module>
+            </login-modules>
+         </authentication>
+      </realm>
+      <realm>
+         <name>commandcenter</name>
+         <description>Command Center</description>
+         <authentication>
+            <http-challenge-scheme>Application Basic</http-challenge-scheme>
+            <http-cookie>kaazingCommandCenter</http-cookie>
+            <login-modules>
+               <login-module>
+                  <type>file</type>
+                  <success>required</success>
+                  <options>
+                     <file>jaas-config.xml</file>
+                  </options>
+               </login-module>
+            </login-modules>
+         </authentication>
+      </realm>
+   </security>
+   <service>
+      <name>Redis Service WS</name>
+      <description>Redis Service for WS</description>
+      <accept>ws://${gateway.hostname}:8002/redis</accept>
+      <connect>tcp://localhost:6379</connect>
+      <type>redis</type>
+      <properties>
+         <authorization.factory>com.kaazing.xignite.registration.ReauthXigniteAuthFactory</authorization.factory>
+         <inactivity.timeout>0</inactivity.timeout>
+         <topic>
+            <name>*</name>
+            <!-- Currently, the redis service supports a cache size of 1 only -->
+            <cache.size>1</cache.size>
+         </topic>
+      </properties>
+      <realm-name>xignite-ws</realm-name>
+      <authorization-constraint>
+         <require-role>AUTHORIZED</require-role>
+      </authorization-constraint>
+      <cross-site-constraint>
+         <allow-origin>*</allow-origin>
+      </cross-site-constraint>
+   </service>
+   <service>
+      <name>JMS Service</name>
+      <description>JMS Service</description>
+      <accept>ws://${gateway.hostname}:8003/jms</accept>
+	  <type>jms</type>
+
+      <properties>
+        <connection.factory.name>ConnectionFactory</connection.factory.name>
+        <context.lookup.topic.format>dynamicTopics/%s</context.lookup.topic.format>
+        <context.lookup.queue.format>dynamicQueues/%s</context.lookup.queue.format>
+        <env.java.naming.factory.initial>org.apache.activemq.jndi.ActiveMQInitialContextFactory</env.java.naming.factory.initial>
+        <env.java.naming.provider.url>tcp://${gateway.hostname}:61616</env.java.naming.provider.url>
+        <authorization.factory>com.kaazing.xignite.registration.ReauthXigniteAuthFactory</authorization.factory>
+      </properties>
+
+      <realm-name>xignite-ws</realm-name>
+      <authorization-constraint>
+        <require-role>AUTHORIZED</require-role>
+      </authorization-constraint>
+
+      <cross-site-constraint>
+        <allow-origin>*</allow-origin>
+      </cross-site-constraint>
+   </service>
+   <!-- Session service This type of service is used to prevent sessions from 
+		timing out. From the documentation table of contents, click the "Configuration 
+		Element Reference" and then click "session (service)" for more information. 
+		Note: Communication with the session service should be always be configured 
+		to use HTTPS. For demonstration purposes, this example does not use HTTPS 
+		because the demo server lacks a certificate. -->
+   <!-- JMX Management service. -->
+   <service>
+      <name>JMX Management</name>
+      <description>JMX management service</description>
+      <type>management.jmx</type>
+      <properties>
+         <connector.server.address>jmx://${gateway.hostname}:2020/</connector.server.address>
+      </properties>
+      <realm-name>commandcenter</realm-name>
+      <authorization-constraint>
+         <require-role>ADMINISTRATOR</require-role>
+      </authorization-constraint>
+   </service>
+   <!-- SNMP Management service. -->
+   <service>
+      <name>SNMP Management</name>
+      <description>SNMP management service</description>
+      <accept>ws://${gateway.hostname}:${gateway.base.port}/snmp</accept>
+      <type>management.snmp</type>
+      <realm-name>commandcenter</realm-name>
+      <authorization-constraint>
+         <require-role>ADMINISTRATOR</require-role>
+      </authorization-constraint>
+      <cross-site-constraint>
+         <allow-origin>*</allow-origin>
+      </cross-site-constraint>
+   </service>
+   <service-defaults>
+      <mime-mapping>
+         <extension>html</extension>
+         <mime-type>text/html</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>htm</extension>
+         <mime-type>text/html</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>js</extension>
+         <mime-type>text/javascript</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>png</extension>
+         <mime-type>image/png</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>gif</extension>
+         <mime-type>image/gif</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>jpg</extension>
+         <mime-type>image/jpeg</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>jpeg</extension>
+         <mime-type>image/jpeg</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>svg</extension>
+         <mime-type>image/svg+xml</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>css</extension>
+         <mime-type>text/css</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>swf</extension>
+         <mime-type>application/x-shockwave-flash</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>xap</extension>
+         <mime-type>application/x-silverlight-app</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>htc</extension>
+         <mime-type>text/x-component</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>jnlp</extension>
+         <mime-type>application/x-java-jnlp-file</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>manifest</extension>
+         <mime-type>text/cache-manifest</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>appcache</extension>
+         <mime-type>text/cache-manifest</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>vtt</extension>
+         <mime-type>text/vtt</mime-type>
+      </mime-mapping>
+      <mime-mapping>
+         <extension>aspx</extension>
+         <mime-type>text/html</mime-type>
+      </mime-mapping>
+   </service-defaults>
+   <!-- ############################################################################# 
+		############################################################################# 
+		Do not remove closing element ############################################################################# 
+		############################################################################# -->
+</gateway-config>
