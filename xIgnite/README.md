@@ -13,6 +13,6 @@ Kaazing WebSocket technology enables your Web Application to receive the price c
 
 
 
-Please [CONTACT US](https://kaazing.com/contact/xignitedemotolead/) for more information
+Please [CONTACT US](https://kaazing.com/contact/xignitedemotolead/{:target="_blank"}) for more information
 
 
