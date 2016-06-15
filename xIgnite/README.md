@@ -6,7 +6,8 @@ Xignite provides cloud-based financial market data APIs to help emerging compani
 
 Kaazing WebSocket technology enables your Web Application to receive the price changes without the need to continuously poll the API, thus substantially improves scalability, and reduces the load on the servers.
 
-Please <a href="https://kaazing.com/contact/xignitedemotolead/" target="_blank">CONTACT US</a> for more information.
+
+Please <a href="https://kaazing.com/contact/xignitedemotolead/" target="_blank"> CONTACT US</a> for more information.
 
 
 
