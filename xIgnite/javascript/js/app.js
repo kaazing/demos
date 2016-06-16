@@ -529,6 +529,13 @@ angular.module("xIgnite-demo", ['rzModule', 'uiSwitch','LocalStorageModule'])
 			$scope.restErrors = "REST Demo is limited to " + $scope.restCallsLimitMin + " minutes."
 		};
 
+		$scope.stopWsCalls = function () {
+			$scope.client.close();
+			$timeout(function(){
+				$scope.wsErrors = "WebSocket Demo is limited to " + $scope.restCallsLimitMin + " minutes."
+			}, 1000);
+		}
+
 		$scope.getXigniteToken = function(){
 			$http({
 				method:'GET',
@@ -553,7 +560,9 @@ angular.module("xIgnite-demo", ['rzModule', 'uiSwitch','LocalStorageModule'])
 			$scope.subscribeUnsibscribeCurrencies();
 			google.charts.load('current', {'packages': ['line','gauge']});
 			google.charts.setOnLoadCallback($scope.drawChart);
+			$timeout($scope.stopWsCalls, $scope.restCallsLimitMin*60*1000);
 			$scope.getXigniteToken();
+
 		});
 
 		$scope.xigniteToken = null;
