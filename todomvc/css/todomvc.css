@@ -1,0 +1,23 @@
+li.busy {
+    background-color: #8b8c8d;
+}
+
+h1, h2, h3, h4 {
+    color: #FFFFFF;
+    font-family: inherit;
+}
+
+.download {
+    display: block;
+}
+
+body{
+    max-width: 100%;
+}
+
+.todoapp{
+    max-width:550px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: initial;
+}

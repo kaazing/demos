@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" data-framework="react">
+	<head>
+		<meta charset="utf-8">
+		<title>Kaazing • Shared TodoMVC</title>
+		<link rel="stylesheet" id="kaazing-css" href="//kaazing.com/wp-content/themes/kaazing/assets/css/kaazing.min.css?ver=0.1.0" type="text/css" media="all">
+		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		<link rel="stylesheet" href="css/todomvc.css">
+	</head>
+	<body>
+		<div class="kaazing-cta download">
+			<p><a href="https://kaazing.com/getting-started" class="button cta-button" target="_blank">Build your app</a><a href="https://kaazing.com/download" class="button cta-button" target="_blank">Download</a><a href="https://kaazing.com/doc/5.0/index.html" class="button cta-button" target="_blank">Learn more</a>
+				<a href="https://github.com/kaazing/demos/tree/develop/todmvc" class="button cta-button" target="_blank"><img align="center" class="alignnone wp-image-15227" title="View on GitHub" src="https://kaazing.com/wp-content/uploads/2016/06/github-cat-white-black-32.png" alt="github-cat-white-black-32" width="24" height="24" />&nbsp; View on GitHub</a>
+			</p>
+
+			<p></p>
+		</div>
+		<section class="todoapp"></section>
+		<footer class="info">
+			<p>Double-click to edit a todo</p>
+			<p>Originally created by <a href="http://github.com/petehunt/">petehunt, WebSocket functionality addeded by <a href="http://kaazing.com">Kaazing</a></a></p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+		<script src="node_modules/todomvc-common/base.js"></script>
+		<script src="node_modules/react/dist/react-with-addons.js"></script>
+		<script src="node_modules/classnames/index.js"></script>
+		<script src="node_modules/react/dist/JSXTransformer.js"></script>
+		<script src="node_modules/director/build/director.js"></script>
+		<script src="node_modules/requirejs/require.js"></script>
+		<script src="node_modules/kaazing-javascript-universal-client/JavascriptUniversalClientNPM.js"></script>
+
+		<script src="js/utils.js"></script>
+		<script src="js/todoModel.js"></script>
+		<!-- jsx is an optional syntactic sugar that transforms methods in React's
+		`render` into an HTML-looking format. Since the two models above are
+		unrelated to React, we didn't need those transforms. -->
+		<script type="text/jsx" src="js/todoItem.jsx"></script>
+		<script type="text/jsx" src="js/footer.jsx"></script>
+		<script type="text/jsx" src="js/app.jsx"></script>
+	</body>
+</html>

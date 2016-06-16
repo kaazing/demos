@@ -82,3 +82,6 @@ DerivedData
 *.x86_64
 *.hex
 
+
+todomvc/node_modules/*
+xIgnite/xIgnite-js.tar
