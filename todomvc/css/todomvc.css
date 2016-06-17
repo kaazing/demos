@@ -17,6 +17,8 @@ h1 {
 
 body{
     max-width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .todoapp{
@@ -30,7 +32,7 @@ body{
 
 .header-section {
     text-align: center;
-    background-color: #514f4d;
+    background-color: #000;
 }
 
 label {
@@ -47,3 +49,5 @@ label {
     font-weight:400;
     font-style:normal
 }
+
+
