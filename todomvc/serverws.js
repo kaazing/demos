@@ -40,13 +40,14 @@ function processMessage(cmd) {
 				items: todos
 			}
 
-			socket.emit("todo",retCmd);
+			socket.emit("todomvc",retCmd);
 			console.log("Sent initialization data to " + cmd.clientId);
 		}
 		catch (e) {
 			console.log("Error " + e);
 		}
 	}
+
 }
 
 

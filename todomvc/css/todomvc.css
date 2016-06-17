@@ -7,6 +7,10 @@ h1, h2, h3, h4 {
     font-family: inherit;
 }
 
+h1 {
+    margin: .3em 0;
+}
+
 .download {
     display: block;
 }
@@ -20,4 +24,26 @@ body{
     margin-left: auto;
     margin-right: auto;
     box-sizing: initial;
+}
+
+
+
+.header-section {
+    text-align: center;
+    background-color: #514f4d;
+}
+
+label {
+    font-weight: inherit;
+}
+
+@font-face{
+    font-family:kaazing-icons;
+    src:url(../fonts/kaazing-icons.eot);
+    src:url(../fonts/kaazing-icons-ie.eot) format("embedded-opentype"),
+    url(../fonts/kaazing-icons.ttf) format("truetype"),
+    url(../fonts/kaazing-icons.woff) format("woff"),
+    url(../fonts/kaazing-icons.svg) format("svg");
+    font-weight:400;
+    font-style:normal
 }

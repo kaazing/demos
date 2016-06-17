@@ -186,7 +186,8 @@ var app = app || {};
 	// Connect to WebSocket
 	var client=UniversalClientDef("amqp");
 	var connectionInfo= {
-		url: "wss://demo-stage.kaazing.com:443/amqp091",
+		//url: "wss://demo-stage.kaazing.com:443/amqp091",
+		url: 'ws://localhost:8000/amqp',
 		username: "guest",
 		password: "guest"
 	};
