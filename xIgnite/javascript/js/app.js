@@ -8,7 +8,7 @@ angular.module("xIgnite-demo", ['rzModule', 'uiSwitch','LocalStorageModule'])
 		localStorageServiceProvider.setPrefix('kaazing-xignite-demo');
 		localStorageServiceProvider.setStorageType('localStorage');
 		})
-	.controller("mainCtl", function ($scope, $timeout, $http, localStorageService) {
+	.controller("mainCtl", function ($scope, $timeout, $http, localStorageService, $location) {
 		var vm = this;
 		vm.refreshSlider = function () {
 			$timeout(function () {
@@ -443,9 +443,18 @@ angular.module("xIgnite-demo", ['rzModule', 'uiSwitch','LocalStorageModule'])
 					$scope.restChanges++;
 			}
 		};
+
+		var wsUrl="ws://localhost:8002/redis?token=Your_xIgnite_Token";
+		var tokenUrl="http://localhost:8080/token";
+
+		if ($location.host()!="localhost"){
+			wsUrl="wss://"+$location.host()+"/redis?token=Your_xIgnite_Token";
+			tokenUrl="http://"+$location.host()+"/token";
+		}
+
+
 		var connectionInfo = {
-			//url: "ws://demo-stage.kaazing.com:80/redis?token=Your_xIgnite_Token",
-			url: "ws://localhost:8002/redis?token=Your_xIgnite_Token",
+			url: wsUrl,
 			username: "",
 			password: ""
 		};
@@ -539,8 +548,7 @@ angular.module("xIgnite-demo", ['rzModule', 'uiSwitch','LocalStorageModule'])
 		$scope.getXigniteToken = function(){
 			$http({
 				method:'GET',
-				//url:'http://demo-stage.kaazing.com/token'
-				url:'http://localhost:8080/token'
+				url:tokenUrl,
 			}).then(function(success){
 				$scope.xigniteToken = success.data.token;
 				$scope.xigniteUserId = success.data.userId;
