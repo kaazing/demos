@@ -64,3 +64,8 @@ node serverws.js
 [10]:	https://github.com/kaazing/tutorials/issues
 [11]:	http://developer.kaazing.com/downloads/amqp-edition-download/
 [12]:	https://qpid.apache.org/
+
+
+To start building your own application with Kaazing Websocket Gateway, visit our [Getting Started](https://kaazing.com/getting-started/) page. </br>
+
+Please [Contact Us](https://kaazing.com/contact/xignitedemotolead/) for more information.
