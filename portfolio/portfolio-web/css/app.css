@@ -199,3 +199,8 @@ h1, h2, h3, h4 {
 	font-family: "Helvetica Neue", Arial, Helvetica, "Nimbus Sans L", sans-serif;
 	font-weight: bold;
 }
+
+.transaction-error{
+	border-style: solid;
+	border-color: red;
+}

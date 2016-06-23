@@ -1,4 +1,4 @@
-package com.kaazing.gateway.samples.portfolio;
+package com.kaazing.demos.portfolio;
 
 import java.util.LinkedList;
 import java.util.List;

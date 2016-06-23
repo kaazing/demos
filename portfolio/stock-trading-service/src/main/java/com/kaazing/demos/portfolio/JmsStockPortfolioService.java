@@ -1,13 +1,10 @@
-package com.kaazing.gateway.samples.portfolio;
+package com.kaazing.demos.portfolio;
 
 import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -33,8 +30,6 @@ import org.apache.log4j.xml.DOMConfigurator;
 public class JmsStockPortfolioService implements Runnable, MessageListener {
 
     public static final int THROTTLING_DIVISOR = 4;     // Slow feeds for IE by a factor of 4
-
-    static private DecimalFormat _displayFormat = new DecimalFormat("####.00", new DecimalFormatSymbols(Locale.ENGLISH));
 
     private ConnectionFactory _connectionFactory;
     private Queue _commandQueue;

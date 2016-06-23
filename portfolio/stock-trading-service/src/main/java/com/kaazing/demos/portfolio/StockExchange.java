@@ -1,4 +1,4 @@
-package com.kaazing.gateway.samples.portfolio;
+package com.kaazing.demos.portfolio;
 
 import java.io.IOException;
 import java.security.SecureRandom;

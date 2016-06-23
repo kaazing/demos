@@ -1,4 +1,4 @@
-package com.kaazing.gateway.samples.portfolio;
+package com.kaazing.demos.portfolio;
 
 public class PurchasedStock {
 

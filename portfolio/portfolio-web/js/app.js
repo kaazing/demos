@@ -14,7 +14,9 @@ angular.module("portfolio-demo", [])
 		];
 
 		$scope.error=null;
+		$scope.transactionError=false;
 		$scope.isBuyingOrSelling=false;
+		$scope.commandInProgress=false;
 
 		$scope.buyOrSell={};
 		$scope.buyOrSell.ticker=null;
@@ -34,6 +36,8 @@ angular.module("portfolio-demo", [])
 		}
 
 		$scope.complete=function () {
+			$scope.transactionError=false;
+			$scope.commandInProgress=false;
 			$scope.isBuyingOrSelling=false;
 			$scope.buyOrSell.ticker=null;
 			$scope.buyOrSell.value=null;
@@ -46,7 +50,7 @@ angular.module("portfolio-demo", [])
 			else
 				$log.info("Selling "+$scope.buyOrSell.value+" shares of "+$scope.buyOrSell.ticker);
 			$scope.performAction();
-			$scope.complete();
+			$scope.commandInProgress=true;
 		}
 
 		$scope.handleException=function(e){
@@ -123,7 +127,8 @@ angular.module("portfolio-demo", [])
 
 		$scope.setAvailableCash=function(value) {
 			$timeout(function () {
-				$scope.availableCash=value*1;
+				var val=value*1;
+				$scope.availableCash=val.toFixed(2);
 			},100);
 		}
 
@@ -159,8 +164,11 @@ angular.module("portfolio-demo", [])
 		$scope.onCommandResponse=function(response){
 			try {
 				var status = response.getStringProperty('status');
-				if (status != 'ok')
+				if (status != 'ok'){
+					$scope.commandInProgress=false;
+					$scope.transactionError=true;
 					return;
+				}
 				var command = response.getStringProperty('command');
 				var result = response.getStringProperty('result');
 				var stock;
@@ -176,11 +184,13 @@ angular.module("portfolio-demo", [])
 					var value = response.getFloatProperty('value');
 					$scope.updateBudget(-value);
 					$scope.updateStockRow(stock);
+					$scope.complete();
 				} else if (command == 'sell') {
 					stock = parseStock(result);
 					var value = response.getFloatProperty('value');
 					$scope.updateBudget(value);
 					$scope.updateStockRow(stock);
+					$scope.complete();
 				}
 			} catch (exception) {
 				$scope.handleException(exception);
