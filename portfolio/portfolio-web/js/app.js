@@ -4,11 +4,14 @@
 'use strict';
 
 angular.module("portfolio-demo", [])
-	.constant("connectionInfo", {
-		"url": "ws://localhost:8000/jms",
-		"topicName":"/topic/portfolioStock"
-	})
-	.controller("mainCtl", function ($scope, $log, $timeout, connectionInfo) {
+	.controller("mainCtl", function ($scope, $log, $timeout, $location) {
+		$scope.connectionInfo={
+			url: "ws://localhost:8000/jms",
+			topicName:"/topic/portfolioStock"
+		}
+		if ($location.host()!="localhost"){
+			$scope.connectionInfo.url="wss://"+$location.host()+"/jms";
+		}
 		$scope.stockArray=new Array();
 		$scope.stocks=[
 		];
@@ -74,6 +77,7 @@ angular.module("portfolio-demo", [])
 
 		$scope.totalShares=0;
 		$scope.totalValue=0;
+		$scope.portfolioValue=0;
 
 		function parseStock(recordText) {
 			var fields = recordText.split(':'); // company, ticker, price, shares
@@ -108,6 +112,11 @@ angular.module("portfolio-demo", [])
 		}
 
 
+		$scope.calculatePortfolioValue=function(){
+			var val=$scope.totalValue*1+$scope.availableCash*1;
+			$scope.portfolioValue=val.toFixed(2);
+		}
+
 		$scope.buildPortfolio=function(messageText) {
 			var stocks = [];
 			var records = messageText.split('|');
@@ -121,6 +130,7 @@ angular.module("portfolio-demo", [])
 				});
 				$scope.totalShares=$scope.calcTotalShares();
 				$scope.totalValue=$scope.calcTotalValue();
+				$scope.calculatePortfolioValue();
 			})
 			$log.info("Portfolio loaded...");
 		}
@@ -129,6 +139,7 @@ angular.module("portfolio-demo", [])
 			$timeout(function () {
 				var val=value*1;
 				$scope.availableCash=val.toFixed(2);
+				$scope.calculatePortfolioValue();
 			},100);
 		}
 
@@ -158,6 +169,7 @@ angular.module("portfolio-demo", [])
 				$scope.stocks[row].value = stock.value;
 				$scope.totalShares=$scope.calcTotalShares();
 				$scope.totalValue=$scope.calcTotalValue();
+				$scope.calculatePortfolioValue();
 			})
 		}
 
@@ -222,14 +234,14 @@ angular.module("portfolio-demo", [])
 		}
 
 		$scope.connect=function(){
-			var jmsConnectionFactory = new JmsConnectionFactory(connectionInfo.url);
+			var jmsConnectionFactory = new JmsConnectionFactory($scope.connectionInfo.url);
 			var connectionFuture =  jmsConnectionFactory.createConnection("", "", function () {
 				if (!connectionFuture.exception) {
 					try {
 						$scope.connection = connectionFuture.getValue();
 						$scope.connection.setExceptionListener($scope.handleException);
 
-						$log.info("CONNECTED to "+connectionInfo.url);
+						$log.info("CONNECTED to "+$scope.connectionInfo.url);
 
 						$scope.session = $scope.connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
@@ -242,7 +254,7 @@ angular.module("portfolio-demo", [])
 						$scope.responseConsumer = $scope.session.createConsumer($scope.responseQueue);
 						$scope.responseConsumer.setMessageListener($scope.onCommandResponse);
 
-						$scope.stockTopic = $scope.session.createTopic(connectionInfo.topicName);
+						$scope.stockTopic = $scope.session.createTopic($scope.connectionInfo.topicName);
 						$scope.stockConsumer = $scope.session.createConsumer($scope.stockTopic);
 						$scope.stockConsumer.setMessageListener($scope.onStockMessage);
 						$scope.connection.start(function () {

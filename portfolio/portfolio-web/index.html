@@ -57,18 +57,23 @@
 								</tr>
 							</thead>
 							<tfoot>
-								<tr id="totals">
+								<tr>
 									<td colspan="4"> Total value: </td>
 									<td style="text-align: right"> {{totalShares}} </td>
 									<td style="text-align: right"> ${{totalValue}} </td>
 									<td/>
 								</tr>
-								<tr id="budget">
+								<tr>
 									<td colspan="5"> Cash available: </td>
 									<td class="value" style="text-align: right"> ${{availableCash}} </td>
 									<td>&nbsp;</td>
 								</tr>
-								</tfoot>
+								<tr>
+									<td colspan="5"> <i>Total portfolio value: </i></td>
+									<td class="value" style="text-align: right"> <i><b>${{portfolioValue}} </b></i></td>
+									<td>&nbsp;</td>
+								</tr>
+							</tfoot>
 							<tbody>
 								<tr ng-repeat="stock in stocks">
 									<td>
@@ -105,7 +110,7 @@
 										<div ng-if="isBuyingOrSelling && buyOrSell.ticker == stock.ticker" class="parameters" style="layout:inline-block; float:left;">
 											<div ng-class="{'transaction-error':transactionError}">
 												<span name="action">{{(buyOrSell.isBuying)?'buy':'sell'}}</span>: <input type="text" ng-model="buyOrSell.value" style="width:4em" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>shares
-												<button class="btn btn-primary" ng-click="confirm()" ng-disabled="commandInProgress || !buyOrSell.value || (!buyOrSell.isBuying && buyOrSell.value>stock.shares) || (buyOrSell.isBuying && (buyOrSell.value*stock.price>availableCash))">
+												<button class="btn btn-primary" ng-click="confirm()" ng-disabled="commandInProgress || !buyOrSell.value || (!buyOrSell.isBuying && (buyOrSell.value*1)>(stock.shares*1)) || (buyOrSell.isBuying && ((buyOrSell.value*1)*(stock.price*1))>(availableCash*1))">
 													OK
 												</button>
 												<button class="btn btn-secondary" ng-click="complete()" ng-disabled="commandInProgress">
