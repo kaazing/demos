@@ -1,7 +1,28 @@
 # Kaazing Javascript & ReactJS TodoMVC Example
 
+> Kaazing is the world's most scalable, secure, and robust WebSocket platform for real-time Web communication
 
-Application enhances ReactJS TodoMVC with real-time capabilities.
+> _[Kaazing - kaazing.com][1]_
+
+
+## Using Kaazing Technology
+The [Kaazing Developers website][2] is a great resource for getting started.
+
+Here are some links you may find helpful:
+
+* [WebSockets][3]
+* [Kaazing Universal Client for Javascript][4]
+* [API Reference][5]
+* [Using Kaazing JavaScript AMQP Clients][6]
+* [Forums][7]
+* [Blog][8]
+* [FAQ][9]
+
+
+_If you have other helpful links to share, or find any of the links above no longer work, please [let us know][10]._
+
+## Implementation
+Application enhances ReactJS TodoMVC published on [TodoMVC site](http://todomvc.com/examples/react/#/) with real-time capabilities.
 Kaazing WebSocket enables Web application to use publish/subscribe model. Application notifies other instances when
 - Item is created
 - Item is complete/incomplete
