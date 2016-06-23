@@ -444,7 +444,7 @@ angular.module("xIgnite-demo", ['rzModule', 'uiSwitch','LocalStorageModule'])
 			}
 		};
 		var connectionInfo = {
-			//url: "ws://demo-stage.kaazing.com:80/redis?token=Your_xIgnite_Token",
+			//url: "wss://demo-stage.kaazing.com:80/redis?token=Your_xIgnite_Token",
 			url: "ws://localhost:8002/redis?token=Your_xIgnite_Token",
 			username: "",
 			password: ""

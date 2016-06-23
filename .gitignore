@@ -87,3 +87,9 @@ todomvc/node_modules/*
 xIgnite/xIgnite-js.tar
 
 todomvc.tar
+
+portfolio/.recommenders/*
+portfolio/portfolio-web/node_modules/*
+portfolio/portfolio-web/index-orig.html
+
+portfolio/portfolio-web/js/PortfolioJQuery.js
