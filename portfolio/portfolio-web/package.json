@@ -1,0 +1,24 @@
+{
+  "name": "portfolio-web",
+  "version": "1.0.0",
+  "description": "Stock Trading via WebSockets, and JMS",
+  "main": "index.html",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaazing/demos/tree/develop/portfolio"
+  },
+  "keywords": [
+    "kaazing",
+    "websocket",
+    "jms",
+    "demo"
+  ],
+  "author": "Kaazing Corporation",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.5.7",
+    "bootstrap": "^3.3.6",
+    "kaazing-javascript-jms-client": "^4.4.2"
+  }
+}

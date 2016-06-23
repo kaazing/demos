@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="portfolio-demo">
+	<head>
+		<meta charset="utf-8" />
+		<title>Stock Trading via WebSockets, and JMS</title>
+		<meta name="description" content="Stock ticker client example" />
+		<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" id="kaazing-css" href="//kaazing.com/wp-content/themes/kaazing/assets/css/kaazing.min.css?ver=0.1.0" type="text/css" media="all">
+		<link rel="stylesheet" href="css/app.css">
+		<script src="node_modules/angular/angular.js"></script>
+		<script src="node_modules/kaazing-javascript-gateway-client/WebSocket.js"></script>
+		<script src="node_modules/kaazing-javascript-jms-client/JmsClient.js"></script>
+
+		<script src="js/app.js"></script>
+		<script>
+			var topicName = "/topic/portfolioStock";
+
+		</script>
+
+	</head>
+	<body>
+		<header>
+			<div class="row">
+				<section>
+					<div class="col-md-3">
+						<a href="//kaazing.com/" target="_blank"><img style="-webkit-user-select: none" src="https://s3.amazonaws.com/10up-new/wp-content/uploads/20160112214032/Kaazing-logo-115x115.png"/></a>
+					</div>
+					<div class="col-md-6">
+						<h1>Stock ticker client example</h1>
+						<h4>WebSocket, JMS</h4>
+					</div>
+				</section>
+			</div>
+		</header>
+		<div class="kaazing-cta download">
+			<p><a href="https://kaazing.com/getting-started" class="button cta-button" target="_blank">Build your app</a><a href="https://kaazing.com/download" class="button cta-button" target="_blank">Download</a><a href="https://kaazing.com/doc/5.0/index.html" class="button cta-button" target="_blank">Learn more</a>
+				<a href="https://github.com/kaazing/demos/tree/develop/portfolio" class="button cta-button" target="_blank"><img class="alignnone wp-image-15227" title="View on GitHub" src="https://kaazing.com/wp-content/uploads/2016/06/github-cat-white-black-32.png" alt="github-cat-white-black-32" width="24" height="24" />&nbsp; View on GitHub</a>
+			</p>
+
+			<p></p>
+		</div>
+		<div class="container" ng-controller="mainCtl" ng-init="connect()">
+			<div class="row">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h1 class="h1-title">Real-Time Portfolio via JMS and WebSockets</h1>
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th class="company" width="21%"> Company </th>
+									<th class="ticker" width="10%"> Ticker </th>
+									<th class="price" width="15%" style="text-align: right"> Price </th>
+									<th class="change" width="5%"> Change </th>
+									<th class="shares" width="10%" style="text-align: right"> Shares </th>
+									<th class="value" width="10%" style="text-align: right"> Value </th>
+									<th class="buttons"><!-- actions --></th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr id="totals">
+									<td colspan="4"> Total value: </td>
+									<td style="text-align: right"> {{totalShares}} </td>
+									<td style="text-align: right"> ${{totalValue}} </td>
+									<td/>
+								</tr>
+								<tr id="budget">
+									<td colspan="5"> Cash available: </td>
+									<td class="value" style="text-align: right"> ${{availableCash}} </td>
+									<td>&nbsp;</td>
+								</tr>
+								</tfoot>
+							<tbody>
+								<tr ng-repeat="stock in stocks">
+									<td>
+										{{stock.company}}
+									</td>
+									<td>
+										{{stock.ticker}}
+									</td>
+									<td style="text-align: right">
+										{{stock.price}}
+									</td>
+									<td>
+										<div style="text-align: center">
+											<span ng-class="{'symbol-data-minus':stock.change<0, 'symbol-data-plus':stock.change>0}">
+												<span ng-if="stock.change!=0	" class="tick-up" ng-class="{'tick-down':stock.change<0}"></span>{{stock.change}}
+											</span>
+										</div>
+									</td>
+									<td style="text-align: right">
+										{{stock.shares}}
+									</td>
+									<td style="text-align: right">
+										${{stock.value}}
+									</td>
+									<td>
+										<div ng-if="!isBuyingOrSelling || buyOrSell.ticker != stock.ticker" style="layout:inline-block; float:left;">
+											<button class="btn btn-primary" ng-click="buy(stock.ticker)" ng-disabled="isBuyingOrSelling">
+												Buy
+											</button>
+											<button ng-if="stock.shares>0" class="btn btn-primary" ng-click="sell(stock.ticker)" ng-disabled="isBuyingOrSelling">
+												Sell
+											</button>
+										</div>
+										<div ng-if="isBuyingOrSelling && buyOrSell.ticker == stock.ticker" class="parameters" style="layout:inline-block; float:left;">
+											<span name="action">{{(buyOrSell.isBuying)?'buy':'sell'}}</span>: <input type="text" ng-model="buyOrSell.value" style="width:4em" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>shares
+											<button class="btn btn-primary" ng-click="confirm()" ng-disabled="!buyOrSell.value">
+												OK
+											</button>
+											<button class="btn btn-secondary" ng-click="complete()">
+												Cancel
+											</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-if="error">
+				<div class="panel panel-danger">
+					<div class="panel-heading">Application Error</div>
+					<div class="panel-body">{{error}}</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
