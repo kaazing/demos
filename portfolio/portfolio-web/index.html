@@ -104,7 +104,7 @@
 										</div>
 										<div ng-if="isBuyingOrSelling && buyOrSell.ticker == stock.ticker" class="parameters" style="layout:inline-block; float:left;">
 											<span name="action">{{(buyOrSell.isBuying)?'buy':'sell'}}</span>: <input type="text" ng-model="buyOrSell.value" style="width:4em" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>shares
-											<button class="btn btn-primary" ng-click="confirm()" ng-disabled="!buyOrSell.value">
+											<button class="btn btn-primary" ng-click="confirm()" ng-disabled="!buyOrSell.value || (!buyOrSell.isBuying && buyOrSell.value>stock.shares) || (buyOrSell.isBuying && (buyOrSell.value*stock.price>availableCash))">
 												OK
 											</button>
 											<button class="btn btn-secondary" ng-click="complete()">
