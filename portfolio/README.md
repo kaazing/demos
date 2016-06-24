@@ -1,7 +1,6 @@
 # Real-Time Portfolio via JMS and WebSockets
 
-This web application uses WebSocket for update stocks info in real-time (based on the data provided by a back-end service over JMS) as well as simulates trades.
-The application allows you to buy stocks with available cash (the initial total value of $10,000) and sell stocks, depending of the number of shares available.
+This demo application uses WebSocket to update stock price information in real-time. Simulated price data is provided by a back-end service over JMS (Java Message System) built with Apache ActiveMQ. The demo application allows you to simulate the buying and selling of stocks with an initial fake balance of $10,000. Although the initial prices shown in the demo are current, the high-speed changes are simulated and should not inform any real world trading decisions.
 
 ![Portfolio demo](Portfolio-app.png "Xignite demo")
 
