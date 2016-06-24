@@ -14,4 +14,6 @@ Kaazing WebSocket enables Web application to use publish/subscribe model. Applic
 
 To start building your own application with Kaazing Websocket Gateway, visit our [Getting Started](https://kaazing.com/getting-started/) page. </br>
 
-Please [Contact Us](https://kaazing.com/contact/) for more information.
+Please [Contact Us](https://kaazing.com/contact/) for more information.</br>
+
+Go back to [Demo](http://kaazing.com/demos3/) page.
