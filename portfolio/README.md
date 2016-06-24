@@ -7,3 +7,5 @@ This demo application uses WebSocket to update stock price information in real-t
 To start building your own application with Kaazing Websocket Gateway, visit our [Getting Started](https://kaazing.com/getting-started/) page. </br>
 
 Please [Contact Us](https://kaazing.com/contact/) for more information.
+
+Go back to [Demo](http://kaazing.com/demos3/) page.
