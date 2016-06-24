@@ -8,4 +8,4 @@ To start building your own application with Kaazing Websocket Gateway, visit our
 
 Please [Contact Us](https://kaazing.com/contact/) for more information.
 
-Go back to [Demo](http://kaazing.com/demos3/) page.
+Go back to [Demos](http://kaazing.com/demos3/) page.
