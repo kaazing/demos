@@ -33,14 +33,14 @@
 			</div>
 		</header>
 		<div class="kaazing-cta download">
-			<p><a href="https://kaazing.com/getting-started" class="button cta-button" target="_blank">Build your app</a><a href="https://kaazing.com/download" class="button cta-button" target="_blank">Download</a><a href="https://kaazing.com/doc/5.0/index.html" class="button cta-button" target="_blank">Learn more</a>
+			<p><a href="https://kaazing.com/demos" class="button cta-button" target="_blank">More demos</a><a href="https://kaazing.com/getting-started" class="button cta-button" target="_blank">Build your app</a><a href="https://kaazing.com/download" class="button cta-button" target="_blank">Download</a><a href="https://kaazing.com/doc/5.0/index.html" class="button cta-button" target="_blank">Learn more</a>
 				<a href="https://github.com/kaazing/demos/tree/develop/portfolio" class="button cta-button" target="_blank"><img class="alignnone wp-image-15227" title="View on GitHub" src="https://kaazing.com/wp-content/uploads/2016/06/github-cat-white-black-32.png" alt="github-cat-white-black-32" width="24" height="24" />&nbsp; View on GitHub</a>
 			</p>
 
 			<p></p>
 		</div>
 		<div class="container" ng-controller="mainCtl" ng-init="connect()">
-			<div class="row">
+			<div class="row introbox">
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<h1 class="h1-title">Real-Time Portfolio via JMS and WebSockets</h1>
@@ -110,9 +110,11 @@
 										<div ng-if="isBuyingOrSelling && buyOrSell.ticker == stock.ticker" class="parameters" style="layout:inline-block; float:left;">
 											<div ng-class="{'transaction-error':transactionError}">
 												<span name="action">{{(buyOrSell.isBuying)?'buy':'sell'}}</span>: <input type="text" ng-model="buyOrSell.value" style="width:4em" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>shares
-												<button class="btn btn-primary" ng-click="confirm()" ng-disabled="commandInProgress || !buyOrSell.value || (!buyOrSell.isBuying && (buyOrSell.value*1)>(stock.shares*1)) || (buyOrSell.isBuying && ((buyOrSell.value*1)*(stock.price*1))>(availableCash*1))">
-													OK
-												</button>
+
+												<button class="btn btn-primary" ng-click="confirm()" ng-disabled="commandInProgress" ng-if="!(!buyOrSell.value || (!buyOrSell.isBuying && (buyOrSell.value*1)>(stock.shares*1)) || (buyOrSell.isBuying && ((buyOrSell.value*1)*(stock.price*1))>(availableCash*1)))">OK</button>
+												<button class="btn btn-primary" data-toggle="tooltip" ng-click="confirm()" ng-disabled="true" ng-if="!buyOrSell.value" title="Number of shares is not specified!">OK</button>
+												<button class="btn btn-primary" data-toggle="tooltip" ng-click="confirm()" ng-disabled="true" ng-if="buyOrSell.value && !buyOrSell.isBuying && (buyOrSell.value*1)>(stock.shares*1)" title="Not enough shares to sell!">OK</button>
+												<button class="btn btn-primary" data-toggle="tooltip" 	ng-click="confirm()" ng-disabled="true" ng-if="buyOrSell.value && buyOrSell.isBuying && ((buyOrSell.value*1)*(stock.price*1))>(availableCash*1)" title="Not enough money to buy!">OK</button>
 												<button class="btn btn-secondary" ng-click="complete()" ng-disabled="commandInProgress">
 													Cancel
 												</button>
@@ -122,6 +124,7 @@
 								</tr>
 							</tbody>
 						</table>
+						<p class="disclaimer">These prices are simulated and are not to be used in trading activities.</p>
 					</div>
 				</div>
 			</div>

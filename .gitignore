@@ -93,3 +93,5 @@ portfolio/portfolio-web/node_modules/*
 portfolio/portfolio-web/index-orig.html
 
 portfolio/portfolio-web/js/PortfolioJQuery.js
+
+*.tar
