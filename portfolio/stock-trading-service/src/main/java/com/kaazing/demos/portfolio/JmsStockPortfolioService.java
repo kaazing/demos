@@ -1,7 +1,6 @@
 package com.kaazing.demos.portfolio;
 
 import java.io.File;
-import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Hashtable;
 import java.util.List;
@@ -26,10 +25,13 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import org.apache.log4j.xml.DOMConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JmsStockPortfolioService implements Runnable, MessageListener {
 
     public static final int THROTTLING_DIVISOR = 4;     // Slow feeds for IE by a factor of 4
+    final static Logger logger = LoggerFactory.getLogger(JmsStockPortfolioService.class);
 
     private ConnectionFactory _connectionFactory;
     private Queue _commandQueue;
@@ -86,10 +88,10 @@ public class JmsStockPortfolioService implements Runnable, MessageListener {
         service.setStockBroadcastTopic(stockTopic);
         service.setThrottledStockBroadcastTopic(throttledStockTopic);
         service.setCommandQueue(commandQueue);
-        System.out.println("* ======================================");
-        System.out.println("* Kaazing Stock Portfolio Demo");
-        System.out.println("* Connecting on " + providerURL);
-        System.out.println("* ======================================");
+        logger.info("* ======================================");
+        logger.info("* Kaazing Stock Portfolio Demo");
+        logger.info("* Connecting on " + providerURL);
+        logger.info("* ======================================");
         service.run();
     }
 
@@ -116,10 +118,7 @@ public class JmsStockPortfolioService implements Runnable, MessageListener {
         }
         catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        } 
     }
 
     /**
@@ -244,7 +243,7 @@ public class JmsStockPortfolioService implements Runnable, MessageListener {
         }
     }
 
-    private void changeStock() throws IOException {
+    private void changeStock(){
         List<PurchasedStock> holdings = _portfolio.getHoldings();
         int stockIndex = _random.nextInt(holdings.size());
         PurchasedStock stock = holdings.get(stockIndex);
