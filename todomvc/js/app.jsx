@@ -183,11 +183,16 @@ var app = app || {};
 		);
 	}
 
+	var url='ws://localhost:8000/amqp';
+	var host = location.hostname;
+	if (host!='localhost'){
+		url="wss://"+host+"/amqp091";
+	}
+
 	// Connect to WebSocket
 	var client=UniversalClientDef("amqp");
 	var connectionInfo= {
-		//url: "wss://demo-stage.kaazing.com:443/amqp091",
-		url: 'ws://localhost:8000/amqp',
+		url: url,
 		username: "guest",
 		password: "guest"
 	};
