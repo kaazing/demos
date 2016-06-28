@@ -10,7 +10,7 @@ To start building your own application with Kaazing Websocket Gateway, visit our
 
 Please [Contact Us](https://kaazing.com/contact/xignitedemotolead/) for more information.
 
-Go back to [Demos](http://kaazing.com/demos3/) page.
+Go back to [Demos](http://kaazing.com/products/demos/) page.
 
 
 
