@@ -1,0 +1,723 @@
+@charset "utf-8";
+/* Kaazing FX Demo styles ver. 2.0, CSS 3.1 */
+
+/* START RESETS for element/tag selectors */
+ul, ol, dl {
+	padding: 0;
+	margin: 0;
+}
+h2, h3, h4, h5, h6, p {
+	margin-top: 0;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+h3 {
+	font-size: 14px;
+	color:  #FFFFFF;
+    margin-bottom: 5px;
+}
+a, a:link, a:visited, a:active {
+	color: #fff;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a img {
+	border: none;
+}
+select {
+	margin: 0;
+}
+
+header, section, div {
+	background: #000;
+	margin: 0;
+}
+/*
+header {
+	height: 28px;
+}
+*/
+footer, .footer {
+	/* position: relative;/* this gives IE6 hasLayout to properly clear */
+	width: 1000px;
+	text-align: center;
+	font-style: italic;
+	color: #ccc;
+	background-color: transparent;
+	margin: 10px auto;
+	border: none;
+	clear: both;
+}
+table {
+	width: 98%;
+	border: none;
+	border-collapse: collapse;
+	margin: 0;
+}
+th {
+	text-align: left;	
+}
+/* END RESETS */
+
+/* START Kaazing Demo classes */
+body {
+	font: 100%/1.4 Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background: url('main-bg.png') no-repeat fixed 0 0 #767676;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+.main-container {
+	width: 1000px;
+	height: 755px;
+	background-color: #000; /*#4c4c4c;*/
+	color: #ccc;
+	margin: 0 auto 0 auto;
+	border: 1px solid #888;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	opacity:0.7;
+    filter:alpha(opacity=40); /* For IE8 and earlier */
+}
+.main-container.waiting {
+	cursor: progress;
+}
+#masthead {
+	position: relative;
+	height:28px;
+	/* background-image: url('../images/kzwhite.png'); */
+	background-position: top right;
+	background-repeat: no-repeat;
+	background-color: #000; /*#4c4c4c;*/
+	font-size: 16px;
+	line-height: 28px;
+	color: #fff;
+	padding: 0;
+	font-weight: bold;
+	text-align: center;
+	border-top: 1px solid #999;
+	border-bottom: 1px solid #666;
+	border-top-right-radius: 10px;
+	-moz-border-radius-topright: 10px;
+	border-top-left-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+}
+#mastLeft {
+	width: 238px; /* 68 + 170; reset by js to 68 when clocks are set */
+	float:left;
+	height: 28px;
+	/*background-image: url('../images/greystripevt.gif');*/
+	border-top-left-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+}
+#mastTitle {
+	width: 585px;
+	float: left;
+}
+#mastScript {
+	/*width: 125px;*/
+	float: right;
+	height: 28px;
+	cursor: help;
+	background: transparent;	
+}
+#mastHover {
+	/*width: 50px;*/
+	float: right;
+	height: 28px;
+	cursor: pointer;
+	background: transparent;
+	border-top-right-radius: 10px;
+	-moz-border-radius-topright: 10px;
+}
+#metricsWindow {
+	width: 220px;
+	height: 255px;
+	position: absolute;
+	top: 31px;
+	left: 762px;
+	z-index: 301;
+	display: none;
+	background-image: url('../images/greystripevt.gif');
+	background-repeat: repeat-x;
+	font-weight: normal;
+	text-align: left;
+	margin: 0;
+	padding: 0 0 6px 8px; 
+	border: outset #888;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	box-shadow: 4px 5px 9px #666;
+	-webkit-box-shadow: 3px 3px 9px #666;
+}
+.metricTitle, .metricSubtitle {
+	width: 150px;
+	height: 20px;
+	clear: left;
+	float: left;
+	font-size: 11px;
+	margin: 0;
+	padding: 3px 0 0 0;
+}
+.metricSubtitle {
+	width: 100px;
+	padding-left: 18px;
+}
+.metricButton {
+	margin-top: 12px;
+	margin-bottom: 12px;	
+}
+.metricValue, .metricSubvalue {
+	width: 60px;
+	float: right;
+	height: 20px;
+	text-align: right;
+	font-size: 12px;
+	color: orange;
+	height: 18px;
+	padding: 3px 8px 0 0;
+	margin: 0;
+}
+.metricSubvalue {
+	width: 60px;
+	padding-left: 8px;
+}
+#rateSelect {
+	width: 220px;
+	clear: both;
+	float: none;
+	font-size: 11px;
+	margin-top: 12px;
+}
+#rateSelect input {
+	vertical-align: middle;
+	outline: none;
+}
+#demoScript {
+	height: 400px;
+	width: 400px;
+	display: none;
+	text-align: justify;
+}
+#alertBox, #addAlert {
+	width: 220px;
+	height: 115px;
+	position: absolute;
+	top: 175px;
+	left: 750px;
+	z-index: 801;
+	display: none;
+	text-align: justify;
+	border: 1px solid #888;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+}
+#alertBox {
+	width: 220px;
+	height: 115px;
+	left: 750px;
+}
+#alertBox h3 {
+	color: orange;	
+}
+.closer {
+	width: 75px;
+	float: right;
+	font-style: italic;
+	cursor: pointer;	
+}
+.closer:hover {
+	text-decoration: underline;	
+}
+#addAlert {
+	width: 100px;
+	height: 100px;
+	left: 450px;
+}
+.sidebar {
+	width: 125px;
+	float: left;
+	height: 342px;
+	overflow: hidden;
+	background-color: #4c4c4c;
+	border-right: 1px solid #666;
+}
+img.flag {
+	width: 22px;
+	height: 14px;
+	margin: 0px 10px 0px 10px;
+}
+.addPlus {
+	width: 25px;
+	float: right;
+	color: #fff;
+	background-color: transparent;
+}
+.sidebar nav ul {
+	list-style: none;
+	border-top: 1px solid #666;
+}
+.sidebar nav ul li {
+	padding: 5px 5px 5px 5px;
+	display: block;
+	width: 125px;  /* for IE6 */
+	text-decoration: none;
+	color: #fff;
+	border-bottom: 1px solid #666;
+}
+.sidebar nav ul li.dragEnabled {
+	cursor: move;
+}
+.sidebar nav ul li.dragEnabled:hover {
+	background-color: #222;
+}
+.sidebar nav ul li.centered:hover {
+	cursor: auto;
+}
+
+/* classes for drag & drop */
+.dropContent {
+	width: 717px;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+/* START container and classes for the FX currency pair widget */
+.mktBlock, .mktBlockLastRow {
+	width: 166px;
+	float: left;
+	height: 131px;
+	overflow: hidden;
+	margin: 3px 16px 16px 0;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+}
+.mktBlockLastRow {
+	margin-bottom: 4px;
+}
+.fxWidgetPrototype {
+	width: 166px;
+	height: 131px;
+	border:#888888 solid thin;
+	border-radius: 10px 10px 10px 10px;
+}
+.fxWidgetPrototype div {
+	background-color: transparent;
+}
+.pairSymbol {
+	height: 24px;
+	width: 125px;
+	float: left;
+	color: #FFF;
+	font-weight: bold;
+	text-shadow: 2px 2px 2px #000;
+	margin: 2px 0 0 2px;
+	padding-left: 4px;
+}
+.unsubscribe {
+	width: 20px;
+	height: 20px;
+	float: right;
+	margin: 3px 8px 0 0;
+	background-image: url('../images/unsubscribe.gif');
+	background-color: transparent;
+	cursor: pointer;
+}
+.tradeSide {
+	width: 73px;
+	float: left;
+	height: 71px;
+	padding: 8px 5px 0px 5px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #fff;
+}
+.tradePrice, .tradeChange {
+	width: 60px;
+	clear: right;
+	float: right;
+	font-size: 14px;
+	font-weight: normal;
+	color:  #53c300;
+	text-align: right;
+	padding-right: 4px;
+}
+.tradeChange {
+	font-size: 12px;
+}
+.tradeTick {
+	width: 30px;
+	clear: right;
+	float: right;
+	font-size: 18px;
+	color:  #53c300;
+	text-align: right;
+	padding-right: 4px;
+	text-shadow: 2px 2px 2px #000;
+}
+.up {
+	color: #53c300;
+	padding-top: 4px;
+}
+.up:before {
+	content: "\25b2";
+	}
+.down {
+	color: red;
+	padding-top: 4px;
+}
+.down:before {
+	content: "\25bc";
+	}
+.tradeType {
+	 height: 29px;
+	 padding: 42px 0 0 6px;
+}
+.widgetLink {
+	height: 35px;
+	width: 83px;
+	float: left;
+	margin-top: 5px;
+	text-align: center;
+	cursor: pointer;
+	text-decoration: underline;
+}
+/* END container and classes for the FX currency pair widget */
+#tradeWindow {
+	width: 300px;
+	min-height: 275px;
+	position: absolute;
+	left: 400px;
+	top: 20px;
+	z-axis: 101;
+	display: none;	
+	padding-left: 15px;
+	border: solid thin #888;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	box-shadow: 2px 3px 4px #666;
+	-webkit-box-shadow: 2px 2px 4px #666;
+}
+input.numbers {
+	width: 160px;
+	border: inset #888;
+	background-color: #eee;
+}
+#twSymbol {
+	font-size: 14px;
+	font-weight: bold;
+	color:	#53c300;
+}
+.twLegend {
+	width: 80px;
+	display: inline-block;
+}
+#twTradeSummary {
+	display: none;
+	font-size: 14px;
+	margin-right: 15px;
+	padding: 6px;
+	border: 1px solid #888;
+}
+#twSummaryText {
+}
+#twErrors {
+	display: none;
+	padding: 10px 0 14px 12px;
+	margin-right: 14px;
+	border: 1px dashed red;	
+}
+#twErrorText {
+	margin-top: 25px;
+	color: yellow;	
+}
+#twHelp {
+	width: 270px;
+	display: none;
+	padding: 6px;
+	text-align: justify;
+}
+#positionWindow{
+	width: 350px;
+	min-height: 350px;
+	position: absolute;
+	left: 300px;
+	top: 75px;
+	z-axis: 201;
+	display: none;	
+	background-image: url('../images/greystripevt.gif');
+	background-repeat: repeat-x;
+	padding-left: 15px;
+	border: outset #888;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	box-shadow: 4px 5px 9px #666;
+	-webkit-box-shadow: 3px 3px 9px #666;
+}
+#scriptWindow {
+	width: 500px;
+	position: absolute;
+	left: 127px;
+	top: 75px;
+	z-axis: 401;
+	display: none;	
+	background-image: url('../images/greystripevt.gif');
+	background-repeat: repeat;
+	padding: 0 15px 0 15px;
+	border: outset #888;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	box-shadow: 4px 5px 9px #666;
+	-webkit-box-shadow: 3px 3px 9px #666;
+}
+#scriptWindow div ol {
+	margin: 12px 0 8px 15px;	
+}
+#browserScript, #mobileScript {
+	padding: 0 8px 6px 12px;
+	margin-bottom: 15px;	
+	border-bottom-right-radius: 10px;
+	-moz-border-radius-bottomright: 10px;
+	border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomleft: 10px;
+}
+#browserScript {
+	display: block;
+}
+#mobileScript {
+	display: none;
+}
+/* other widgets */
+.chart {
+	width: 225px;
+	height: 120px;
+	float: left;
+	margin-right: 10px;
+	font-weight: normal;
+}
+#section1, #section2, #section2a, #section3, #section4, #section5 {
+	background-image: url('../images/greystripevt.gif');
+	background-repeat: repeat-x;
+	padding-left: 15px;
+	border: 0;
+	border-top: 1px solid #888;
+}
+#section1 {
+	width: 730px;
+	float: left;
+	height: 342px;
+	position: relative;
+}
+#section2 {
+	height: 165px;
+	width: 470px;
+	clear: left;
+	float: left;
+	padding-right: 0px;
+	border-top-right-radius: 10px;
+	-moz-border-radius-topright: 10px;
+}
+#chart1, #chart2 {
+	width: 220px;
+	height: 120px;
+	margin: 8px 15px 0px 0px;
+}
+#chart2 {
+	margin-right: 0px;
+}
+img.h3Flag {
+	width: 22px;
+	height: 16px;
+	margin: 0px 10px 0px 10px;
+}
+#section2a {
+	/* height: 167px; */
+	width: 498px;
+	float: left;
+	overflow: auto;
+	border-left: 2px solid #444;
+	border-top-left-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+}
+#vTable th, #vTable td {
+	height: 25px;
+	width: 110px;
+	vertical-align: middle;
+	text-align: center;
+}
+#vTable th {
+	color: #FFF; /* #53c300; */
+	font-size: 12px;
+	font-weight: bold;
+	padding-top: 10px;
+}
+#section3 {
+	width: 985px;
+	clear: left;
+	float: left;
+	text-align: left;
+	padding-bottom: 5px;
+}
+#iTable {
+	width: 945px;
+	margin: 0 auto;
+}
+#iTable th {
+	width: 115px;
+	text-align: right;
+	color: #53c300;
+}
+#iTable th.leftmost {
+	width: 85px;
+	text-align: right;
+}
+#iTable td {
+	width: 70px;
+	text-align: right;
+	padding: 0;
+}
+#section4 {
+	height: 116px;
+	width: 459px;
+	clear: left;
+	float: left;
+	padding: 0 8px 0 18px;
+	overflow: hidden;
+	border-top-right-radius: 10px;
+	-moz-border-radius-topright: 10px;
+	border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomleft: 10px;
+}
+#section4 td:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+#section5 {
+	height: 126px;
+	width: 498px;
+	float: right;
+	overflow: hidden;
+	border-left: 2px solid #444;
+	border-top-left-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	border-bottom-right-radius: 10px;
+	-moz-border-radius-bottomright: 10px;
+}
+#newsFeed {
+	padding: 0 8px 0 15px;
+}
+.newsChannel {
+	height: 20px;
+	margin: 2px 0 0 20px;
+	background-color: #444;
+	background-image: url('../images/greystripevt.gif');
+	font-sixe: 9px;
+	font-weight: bold;
+	color: #53c300;
+	border: 1px solid #888;
+	border-top: none;
+	outline: none; /*for Safari */
+}
+#section6 {
+	width: 955px;
+	float: left;
+	display: none;
+	height: 22px;
+	margin-left: 1px;
+	border-top: 1px solid #888;
+	border-left: 1px solid #888;
+	padding: 3px 0 0 15px;
+	overflow: hidden;
+	border-top-left-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	border-top-right-radius: 10px;
+	-moz-border-radius-topright: 10px;
+	border-bottom-right-radius: 10px;
+	-moz-border-radius-bottomright: 10px;
+	border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomleft: 10px;
+}
+#statusBar {
+	color: orange;
+	font-style: italic;
+}
+/* classes for jQuery animate easing */
+#slidePane { /* this is the visible window, it encloses the wider slideContainer */
+	position: relative; /* IE lte 7 hack */
+	width: 170px;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	float: left;
+	display: none; /* concession to IE 7-8, js changes to 'block' after clocks are set */
+}
+.slideContainer {
+	position: relative;
+	width: 1020px;
+	left: 0px;
+	margin: 0;
+	padding: 0;
+}
+.timeblock {
+	width: 170px;
+	float: left;
+	color: orange;
+	font-size: 11px;
+	text-align: left;
+	background-color: transparent;
+	height: 28px;
+	overflow: hidden;
+}
+/* miscellaneous and utility classes */
+.kaazing {
+	color: #fc6703;
+	font-weight: bold;
+	text-shadow: 2px 2px 2px #000;
+}
+.clearFloats {clear: both;}
+.clearLeft {clear: left;}
+.centered {text-align: center;}
+.right {text-align: right;}
+.helpCursor {cursor: help;}
+.red {color: red;}
+.green {color: #53c300;}
+.yellow {color: yellow;}
+.black {background-color: #000;}
+.grey {color: #4c4c4c;}
+.pinstripe {background-image: url('../images/greystripe.gif');}
+.inline {display: inline-block;}
+.pointer {cursor: pointer; text-decoration: underline;}
+/* .sprites {background-image: url('../images/sprites.png');} */
+*
+{
+	box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+}
+
+table td, table th {
+    border: 0px;
+}
+
+h3 {
+	color:#ccc;
+	font-weight:bold;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 1.4;
+}
+
+h1, h4 {
+	color: #FFF;
+	box-sizing: border-box;
+}
+
+body{
+	line-height: 1.5;
+}
+
+.header-section{
+	text-align: center;
+}

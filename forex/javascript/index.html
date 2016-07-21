@@ -1,0 +1,596 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Kaazing FX Demonstration</title>
+		<meta name="description" content="Kaazing FX Demonstration">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="copyright" content="Copyright 2011-2016 Kaazing Corporation, All Rights Reserved">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css">
+		<link rel="stylesheet" id="kaazing-css" href="//kaazing.com/wp-content/themes/kaazing/assets/css/kaazing.min.css?ver=0.1.0" type="text/css" media="all">
+		<link href="css/fxdemo.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<header>
+			<div class="row">
+				<section class="header-section">
+					<div class="col-md-3">
+						<a href="//kaazing.com/" target="_blank"><img style="-webkit-user-select: none" src="https://s3.amazonaws.com/10up-new/wp-content/uploads/20160112214032/Kaazing-logo-115x115.png"/></a>
+					</div>
+					<div class="col-md-6">
+						<h1>FX Trader Application Demo</h1>
+						<h4>Javascript, WebSocket, JMS</h4>
+					</div>
+			</section>
+			</div>
+		</header>
+		<div class="kaazing-cta download">
+			<p><a href="https://kaazing.com/demos" class="button cta-button" target="_blank">More demos</a><a href="https://kaazing.com/getting-started" class="button cta-button" target="_blank">Build your app</a><a href="https://kaazing.com/download" class="button cta-button" target="_blank">Download</a><a href="https://kaazing.com/doc/5.0/index.html" class="button cta-button" target="_blank">Learn more</a>
+				<a href="https://github.com/kaazing/demos/tree/develop/forex" class="button cta-button" target="_blank"><img class="alignnone wp-image-15227" title="View on GitHub" src="https://kaazing.com/wp-content/uploads/2016/06/github-cat-white-black-32.png" alt="github-cat-white-black-32" width="24" height="24" />&nbsp; View on GitHub</a>
+			</p>
+		</div>
+		<div class="main-container">
+			<!-- <header id="masthead"> changed to <div id="masthead">: IE 7-8 hack for background image missing if <header> or <section> -->
+			<div id="masthead">
+				<div id="mastLeft"></div>
+				<div id="slidePane">
+					<div class="slideContainer" id="cityTime">
+						<div id="clockDate" class="timeblock">
+							&nbsp;
+						</div>
+						<div class="timeblock">
+							GMT: &nbsp; <span id="clock1">00:00:00 AM</span>
+						</div>
+						<div class="timeblock">
+							New York: &nbsp; <span id="clock2">00:00:00 AM</span>
+						</div>
+						<div class="timeblock">
+							London: &nbsp; <span id="clock3">00:00:00 AM</span>
+						</div>
+						<div class="timeblock">
+							Geneva: &nbsp; <span id="clock4">00:00:00 AM</span>
+						</div>
+						<div class="timeblock">
+							Hong Kong: &nbsp; <span id="clock5">00:00:00 AM</span>
+						</div>
+					</div>
+				</div>
+				<div id="mastTitle">
+				</div>
+				<div id="mastHover" title="Click for Websocket Statistics" onclick="showMetrics()"><img src="images/stats-26.png"/></div>
+				<div id="mastScript" title="Click for Instructions on Running this Demo" onclick="document.getElementById('scriptWindow').style.display='block'"><img src="images/HowtoPNG-26.png"/></div>
+				<section id="metricsWindow">
+					<h3 class="inline">Websocket Statistics:</h3>
+					<div class="unsubscribe" title="Close" onclick="hideMetrics(this.parentNode);"></div>
+					<div class="metricTitle">
+						Symbols Watched:
+					</div>
+					<div id="wSubs" class="metricValue">
+						00
+					</div>
+					<div class="metricTitle">
+						Message Counts:
+					</div>
+					<div class="metricSubtitle">
+						Sent:
+					</div>
+					<div id="wSent" class="metricSubvalue">
+						00
+					</div>
+					<div class="metricSubtitle">
+						Received:
+					</div>
+					<div id="wRecd" class="metricSubvalue">
+						00
+					</div>
+					<div class="metricTitle">
+						Message Rate:
+					</div>
+					<div id="wRate" class="metricValue">
+						00
+					</div>
+					<div class="metricTitle">
+						Roundtrip Latency:
+					</div>
+					<div id="wLatency" class="metricValue">
+						00
+					</div>
+					<div class="metricTitle metricButton">
+						<input type="button" value="Latency Probe" title="Latency Probe" onclick="latencyProbe();">
+					</div>
+					<form id="rateSelect">
+						Set Rate to: &nbsp;
+						10
+						<input type="radio" name="msgRate" value="10" onchange="throttleRate(10)" />
+						50
+						<input type="radio" name="msgRate" value="50" checked="checked" onchange="throttleRate(50)" />
+						100
+						<input type="radio" name="msgRate" value="100" onchange="throttleRate(100)" />
+					</form>
+				</section>
+			</div><!-- </header> -->
+			<!-- Drag Sources -->
+			<section id="dragSources">
+				<div class="sidebar">
+					<nav>
+						<ul>
+							<li class="centered" draggable="false"><img src="images/flags/usa.png" alt="" title="Base Currency: US Dollars" class="flag" draggable="false">
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/uk.png" alt="" title="USDGBP" class="flag">
+								USDGBP
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/europe.png" alt="" title="USDEUR" class="flag">
+								USDEUR
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/canada.png" alt="" title="USDCAD" class="flag">
+								USDCAD
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/oz.png" alt="" title="USDAUD" class="flag">
+								USDAUD
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/nz.png" alt="" title="USDNZD" class="flag">
+								USDNZD
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/switz.png" alt="" title="USDCHF" class="flag">
+								USDCHF
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/japan.png" alt="" title="USDJPY" class="flag">
+								USDJPY
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/hongkong.png" alt="" title="USDHKD" class="flag">
+								USDHKD
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/sgd.png" alt="" title="USDSGD" class="flag">
+								USDSGD
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/israel.png" alt="" title="USDILS" class="flag">
+								USDILS
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/russia.png" alt="" title="USDRUB" class="flag">
+								USDRUB
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+						</ul>
+					</nav>
+				</div>
+				<!-- end .sidebar1 -->
+				<div class="sidebar">
+					<nav>
+						<ul>
+							<li class="centered"><img src="images/flags/uk.png" alt="" title="Base Currency: GB Pounds" class="flag" draggable="false">
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/usa.png" alt="" title="GBPUSD" class="flag">
+								GBPUSD
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/europe.png" alt="" title="GBPEUR" class="flag">
+								GBPEUR
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/canada.png" alt="" title="GBPCAD" class="flag">
+								GBPCAD
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/oz.png" alt="" title="GBPAUD" class="flag">
+								GBPAUD
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/nz.png" alt="" title="GBPNZD" class="flag">
+								GBPNZD
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/switz.png" alt="" title="GBPCHF" class="flag">
+								GBPCHF
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/japan.png" alt="" title="GBPJPY" class="flag">
+								GBPJPY
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/hongkong.png" alt="" title="GBPHKD" class="flag">
+								GBPHKD
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/sgd.png" alt="" title="GBPSGD" class="flag">
+								GBPSGD
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/israel.png" alt="" title="GBPILS" class="flag">
+								GBPILS
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+							<li class="dragEnabled" name="dragSource"><img src="images/flags/russia.png" alt="" title="GBPRUB" class="flag">
+								GBPRUB
+								<div class="addPlus">
+									[+]
+								</div>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</section>
+			<!-- end .sidebar2 -->
+			<!-- START Drop Targets -->
+			<div class="dropContent">
+				<section id="section1">
+					<h3>Currency Pairs</h3>
+					<div class="mktBlock dragTarget" name="0"></div>
+					<div class="mktBlock dragTarget" name="1"></div>
+					<div class="mktBlock dragTarget" name="2"></div>
+					<div class="mktBlock dragTarget" name="3"></div>
+					<div class="mktBlock dragTarget" name="4"></div>
+					<div class="mktBlock dragTarget" name="5"></div>
+					<div class="mktBlock dragTarget" name="6"></div>
+					<div class="mktBlock dragTarget" name="7"></div>
+					<!-- END drop targets -->
+					<!-- START jQuery draggable Windows, css 'top' and 'left' are relative to the enclosing <section> above -->
+					<section id="tradeWindow" >
+						<h3 class="inline">Order Entry</h3>
+						<div class="unsubscribe" title="Cancel Order Entry" onclick="cleanupOrderWindow();"></div>
+						<div class="clearFloats"></div>
+						<form>
+							<p>
+								You are placing an order for <span id="twSymbol">&nbsp;</span>
+							</p>
+							<p>
+								<span class="twLegend">Lots: </span>
+								<input type="number" class="numbers" pattern="[0-9]" id="twQuantity">
+							</p>
+							<p>
+								<span class="twLegend">Quote: </span>
+								<input type="number" class="numbers" pattern="[0-9]" id="twPrice">
+							</p>
+							<p id="twBuySellButtons">
+								<span class="twLegend">&nbsp;</span>
+								<input type="button" value="Buy" onclick="processOrder(this.parentNode,'Buy');">
+								<input type="button" value="Sell"onclick="processOrder(this.parentNode,'Sell');">
+								<input type="button" value="Cancel" onclick="cleanupOrderWindow();">
+							</p>
+							<p id="twTradeSummary">
+								<!-- initially display: hidden -->
+								<span id="twSummaryText">&nbsp;</span>
+								<br />
+								<br />
+								<span class="twLegend">&nbsp;</span>
+								<input type="button" value="Submit" onclick="submitOrder();">
+								<input type="button" value="Cancel" onclick="cleanupOrderWindow();">
+							</p>
+							<p id="twErrors">
+								<!-- normally display: hidden -->
+								<span id="twErrorText">&nbsp;</span>
+								<br />
+								<br />
+								<span class="twLegend">Action:</span>
+								<input type="button" value="Back" onclick="retryOrder();">
+								<input type="button" value="Cancel" onclick="cleanupOrderWindow();">
+								<input type="button" value="Help" class="helpCursor" onclick="showOrderHelp();">
+							</p>
+						</form>
+						<div id="twHelp">
+							<!-- normally display: none; jQuery onclick slider  -->
+							<ul>
+								<li>
+									<b>Lots:</b>
+									<ul>
+										<li>
+											Lot range is 1 to 9999, whole numbers only
+										</li>
+										<li>
+											All lots are 'standard' lots (i.e., 100K base units)
+											<br />
+											no demo provision is made for mini or micro Lots
+										</li>
+										<li>
+											<i>Shortcuts</i>: 1k (or 1K) = 1000 lots (100,000,000 base units)
+										</li>
+										<li>
+											Example Lot: 5
+										</li>
+									</ul>
+								</li>
+								<br />
+								<li>
+									<b>Quote:</b>
+									<ul>
+										<li>
+											quote range: 0.00001 to 999.99999
+										</li>
+										<li>
+											A leading zero is <i>required</i> if Quote is less than 1.0000
+										</li>
+										<li>
+											At least four decimals <i>must</i> be in Quote; five decimals are accepted
+										</li>
+										<li>
+											Example Quote: 0.6133
+										</li>
+									</ul>
+								</li>
+								<br />
+								<li>
+									<b>Note:</b> all orders in this Demo are placed as GTC and are executed immediately
+								</li>
+							</ul>
+						</div>
+					</section>
+					<section id="positionWindow" >
+						<h3 class="inline">Order History for <span id="positionSymbol">&nbsp;</span></h3>
+						<div class="unsubscribe" title="Close this Window" onclick="closePositionWindow(this.parentNode);"></div>
+						<p>
+							Net value of Quote currency at purchase: <span id="pwValue">&nbsp;</span>
+						</p>
+						<table  id="pwTable" cols="5"></table>
+					</section>
+					<section id="scriptWindow" >
+						<h3 class="inline">Demo Script</h3>
+						<div class="unsubscribe" title="Close this Window" onclick="this.parentNode.style.display='none';"></div>
+						<hr />
+						<!-- demo script for FF, Safari, Chrome -->
+						<div id="browserScript">
+							<p>
+								This UI will run on a 1024 x 768-pixel monitor; although 1680 x 1200 will offer the most flexibility for positioning draggable windows
+							</p>
+							<p class="centered">
+								Note that all server interactions are conducted in realtime with
+								<br />
+								<span class="kaazing">Kaazing WebSocket Gateway</span>
+							</p>
+							<ol>
+								<li>
+									Drag this window to the side
+								</li>
+								<li>
+									If you would like to view websocket statistics, click on the icon with charts at top right; drag the Metrics window to a convenient location
+								</li>
+								<li>
+									Drag up to 8 currency pairs (one at a time) from the two columns at top left and drop each into "Currency Pairs"
+								</li>
+								<li>
+									As you drag/drop currency pairs, their valuations will appear in the same relative position in "Portfolio Valuations"
+								</li>
+								<li>
+									Drag a Currrency Pair into a different location in the "Currency Pairs" pane; Valuations will also reposition
+								</li>
+								<li>
+									Click the <b>Trade</b> link at the bottom of any currency pair; drag the Order window left
+								</li>
+								<li>
+									Enter an order for Lot = "1" (no quotes) and Quote = "0.6135"; click <b>Buy</b> or <b>Sell</b>; click <b>Submit</b>
+								</li>
+								<li>
+									Note that the Valuation for that currency will change to reflect the net change
+								</li>
+								<li>
+									Click the <b>History</b> link next to the <b>Trade</b> link used to place the order (i.e. the same currency pair)
+								</li>
+								<li>
+									Drag the Order History window to a convenient location
+								</li>
+								<li>
+									<i>Optional</i>: Enter an (error) order for Lot = "1" and Quote = "0.61"; click <b>Buy</b> or <b>Sell</b>; click <b>Help</b>; click <b>Back</b> or <b>Cancel</b>
+								</li>
+								<li class="pointer" onclick="this.parentNode.parentNode.parentNode.style.display='none';">
+									Close this window
+								</li>
+							</ol>
+						</div>
+						<!-- demo script for iPad, iPhone, etc -->
+						<div id="mobileScript">
+							<p class="centered">
+								Note that all server interactions are conducted in realtime with
+								<br />
+								<span class="kaazing">Kaazing WebSocket Gateway - HTML5 Edition</span>
+							</p>
+							<ol>
+								<li>
+									If you would like to view websocket statistics, click on the ideograph in the Kaazing logo at top right
+								</li>
+								<li>
+									Touch up to 8 currency pairs (one at a time) from the two columns at top left
+								</li>
+								<li>
+									As you add currency pairs, their valuations will appear in the same relative position in "Portfolio Valuations"
+								</li>
+								<li>
+									Touch the <b>Trade</b> link at the bottom of any currency pair to place an order
+								</li>
+								<li>
+									Enter an order for Lot = "1" (no quotes) and Quote = "0.6135"; touch <b>Buy</b> or <b>Sell</b>; touch <b>Submit</b>
+								</li>
+								<li>
+									Note that the Valuation for that currency will change to reflect the net change
+								</li>
+								<li>
+									Touch the <b>History</b> link next to the <b>Trade</b> link used to place the order (i.e. the same currency pair)
+								</li>
+								<li>
+									<i>Optional</i>: Enter an (error) order for Lot = "1" and Quote = "0.61"; touch <b>Buy</b> or <b>Sell</b>; touch <b>Help</b>; touch <b>Back</b> or <b>Cancel</b>
+								</li>
+								<li class="pointer" onclick="this.parentNode.parentNode.parentNode.style.display='none';">
+									Close this window
+								</li>
+							</ol>
+						</div>
+					</section>
+					<!-- END jQuery draggable Windows -->
+				</section><!-- END section1 -->
+			</div>
+			<section id="section2">
+				<h3>Spot Prices <img src="images/flags/usah3.gif" width="22" class="h3Flag" draggable="false"></h3>
+				<canvas id="chart1" class="chart"></canvas>
+				<canvas id="chart2" class="chart"></canvas>
+			</section>
+			<section id="section2a">
+				<h3>Portfolio Valuations</h3>
+				<table id="vTable" rows="4" cols="4" draggable="false">
+					<tr>
+						<th></th><th></th><th></th><th></th>
+					</tr>
+					<tr>
+						<td></td><td></td><td></td><td></td>
+					</tr>
+					<tr>
+						<th></th><th></th><th></th><th></th>
+					</tr>
+					<tr>
+						<td></td><td></td><td></td><td></td>
+					</tr>
+				</table>
+			</section>
+			<section id="section3">
+				<h3>Market Indices</h3>
+				<table id="iTable" rows="3" cols="12">
+					<tr>
+						<th class="leftmost">DOW</th><td>0</td><td>0</td><td>0</td>
+						<th>FTSE 100</th><td>0</td><td>0</td><td>0</td>
+						<th>Nikkei</th><td>0</td><td>0</td><td>0</td>
+					</tr>
+					<tr>
+						<th class="leftmost">NASDAQ</th><td>0</td><td>0</td><td>0</td>
+						<th>DAX</th><td>0</td><td>0</td><td>0</td>
+						<th>Hang Seng</th><td>0</td><td>0</td><td>0</td>
+					</tr>
+					<tr>
+						<th class="leftmost">S&P 500</th><td>0</td><td>0</td><td>0</td>
+						<th>CAC 40</th><td>0</td><td>0</td><td>0</td>
+						<th>Shanghai</th><td>0</td><td>0</td><td>0</td>
+					</tr>
+				</table>
+			</section>
+			<section id="section4">
+				<h3>News Feed: &nbsp; New York Times</h3>
+				<!-- future enhancement: other news feeds and Company alerts
+				<h3 class="inline">News Feeds:
+				<select class="newsChannel" id="newsSelect" onchange="changeFeed(this, document.getElementById('newsFeed'));">
+				<option value="NY Times" selected="selected">NY Times</option>
+				<option value="Reuters">Reuters</option>
+				<option value="UPI">UPI</option>
+				<option value="Bloomberg">Bloomberg</option>
+				<option value="Alerts" selected="selected">Alerts</option>
+				<option value="Research">Research</option>
+				</select>
+				</h3>
+				-->
+				<table id="newsFeed">
+					<tr>
+						<td>Opening Websocket for New York Times news feed...</td>
+					<tr>
+						<td></td>
+					</tr></tr>
+					<tr>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section id="section5">
+				<h3>Executions</h3>
+				<table id="executions">
+					<tr>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+					</tr>
+					<tr>
+						<td><i>no recent trades</i></td>
+					</tr>
+				</table>
+			</section>
+			<section id="section6">
+				<div>
+					<span class="green">Status: &nbsp; </span><span id="statusBar">&nbsp;</span>
+				</div>
+			</section>
+			<section id="alertBox">
+				<h3 class="inline">Alert</h3>
+				<div class="unsubscribe" title="Close" onclick="this.parentNode.style.display = 'none';"></div>
+				<p id="alertContent">
+					&nbsp;
+				</p>
+				<div class="closer" onclick="this.parentNode.style.display = 'none';">
+					close alert
+				</div>
+			</section>
+		</div>
+		<!-- end .container -->
+		<!--<footer> misdraws in IE 7 -->
+		<div class="footer">
+			<p>
+				Copyright &copy; 2011-2016 Kaazing Corporation, &nbsp; All Rights Reserved. Demo version 1.01 (User Interface views best with iPad, Firefox, Safari, Chrome, or IE-9)
+			</p>
+			<!--</footer> -->
+		</div>
+	</body>
+	<!-- comment out next line for local testing -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/g/rgraph@20131231(libraries/RGraph.common.core.js+libraries/RGraph.line.js)"></script>
+	<script   src="https://code.jquery.com/jquery-1.12.4.js"   integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="   crossorigin="anonymous"></script>
+	<script   src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"   integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk="   crossorigin="anonymous"></script>
+	<script src="//cdn.kaazing.com/releases/enterprise.javascript.client/4.1.0/WebSocket.js"></script>
+	<script src="//cdn.kaazing.com/releases/enterprise.javascript.client/4.1.0/JmsClient.js"></script>
+	<script type="text/javascript" src="js/lab_utils.js"></script>
+	<script type="text/javascript" src="js/fxdemo.js"></script>
+</html>
