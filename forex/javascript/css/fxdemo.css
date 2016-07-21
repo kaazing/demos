@@ -6,14 +6,14 @@ ul, ol, dl {
 	padding: 0;
 	margin: 0;
 }
-h1, h2, h3, h4, h5, h6, p {
+h2, h3, h4, h5, h6, p {
 	margin-top: 0;
 	padding-right: 15px;
 	padding-left: 15px;
 }
 h3 {
 	font-size: 14px;
-	color:  FFFFFF;
+	color:  #FFFFFF;
     margin-bottom: 5px;
 }
 a, a:link, a:visited, a:active {
@@ -29,13 +29,16 @@ a img {
 select {
 	margin: 0;
 }
+
 header, section, div {
 	background: #000;
 	margin: 0;
 }
+/*
 header {
 	height: 28px;
 }
+*/
 footer, .footer {
 	/* position: relative;/* this gives IE6 hasLayout to properly clear */
 	width: 1000px;
@@ -67,7 +70,7 @@ body {
 	padding: 0;
 	color: #000;
 }
-.container {
+.main-container {
 	width: 1000px;
 	height: 755px;
 	background-color: #000; /*#4c4c4c;*/
@@ -79,13 +82,13 @@ body {
 	opacity:0.7;
     filter:alpha(opacity=40); /* For IE8 and earlier */
 }
-.container.waiting {
+.main-container.waiting {
 	cursor: progress;
 }
 #masthead {
 	position: relative;
 	height:28px;
-	background-image: url('../images/kzwhite.png');
+	/* background-image: url('../images/kzwhite.png'); */
 	background-position: top right;
 	background-repeat: no-repeat;
 	background-color: #000; /*#4c4c4c;*/
@@ -115,14 +118,14 @@ body {
 	float: left;
 }
 #mastScript {
-	width: 125px;
+	/*width: 125px;*/
 	float: right;
 	height: 28px;
 	cursor: help;
 	background: transparent;	
 }
 #mastHover {
-	width: 50px;
+	/*width: 50px;*/
 	float: right;
 	height: 28px;
 	cursor: pointer;
@@ -283,7 +286,7 @@ img.flag {
 	padding: 0;
 }
 /* START container and classes for the FX currency pair widget */
-.mktBlock, mktBlockLastRow {
+.mktBlock, .mktBlockLastRow {
 	width: 166px;
 	float: left;
 	height: 131px;
@@ -531,7 +534,7 @@ img.h3Flag {
 	margin: 0px 10px 0px 10px;
 }
 #section2a {
-	height: 167px;
+	/* height: 167px; */
 	width: 498px;
 	float: left;
 	overflow: auto;
@@ -688,4 +691,33 @@ img.h3Flag {
 .inline {display: inline-block;}
 .pointer {cursor: pointer; text-decoration: underline;}
 /* .sprites {background-image: url('../images/sprites.png');} */
+*
+{
+	box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+}
 
+table td, table th {
+    border: 0px;
+}
+
+h3 {
+	color:#ccc;
+	font-weight:bold;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 1.4;
+}
+
+h1, h4 {
+	color: #FFF;
+	box-sizing: border-box;
+}
+
+body{
+	line-height: 1.5;
+}
+
+.header-section{
+	text-align: center;
+}

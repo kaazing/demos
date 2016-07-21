@@ -6,10 +6,30 @@
 		<meta name="description" content="Kaazing FX Demonstration">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="copyright" content="Copyright 2011-2016 Kaazing Corporation, All Rights Reserved">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css">
+		<link rel="stylesheet" id="kaazing-css" href="//kaazing.com/wp-content/themes/kaazing/assets/css/kaazing.min.css?ver=0.1.0" type="text/css" media="all">
 		<link href="css/fxdemo.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
-		<div class="container">
+		<header>
+			<div class="row">
+				<section class="header-section">
+					<div class="col-md-3">
+						<a href="//kaazing.com/" target="_blank"><img style="-webkit-user-select: none" src="https://s3.amazonaws.com/10up-new/wp-content/uploads/20160112214032/Kaazing-logo-115x115.png"/></a>
+					</div>
+					<div class="col-md-6">
+						<h1>FX Trader Application Demo</h1>
+						<h4>Javascript, WebSocket, JMS</h4>
+					</div>
+			</section>
+			</div>
+		</header>
+		<div class="kaazing-cta download">
+			<p><a href="https://kaazing.com/demos" class="button cta-button" target="_blank">More demos</a><a href="https://kaazing.com/getting-started" class="button cta-button" target="_blank">Build your app</a><a href="https://kaazing.com/download" class="button cta-button" target="_blank">Download</a><a href="https://kaazing.com/doc/5.0/index.html" class="button cta-button" target="_blank">Learn more</a>
+				<a href="https://github.com/kaazing/demos/tree/develop/forex" class="button cta-button" target="_blank"><img class="alignnone wp-image-15227" title="View on GitHub" src="https://kaazing.com/wp-content/uploads/2016/06/github-cat-white-black-32.png" alt="github-cat-white-black-32" width="24" height="24" />&nbsp; View on GitHub</a>
+			</p>
+		</div>
+		<div class="main-container">
 			<!-- <header id="masthead"> changed to <div id="masthead">: IE 7-8 hack for background image missing if <header> or <section> -->
 			<div id="masthead">
 				<div id="mastLeft"></div>
@@ -36,10 +56,9 @@
 					</div>
 				</div>
 				<div id="mastTitle">
-					FX Trader Application Demo
 				</div>
-				<div id="mastHover" title="Click for Websocket Statistics" onclick="showMetrics()"></div>
-				<div id="mastScript" title="Click for Instructions on Running this Demo" onclick="document.getElementById('scriptWindow').style.display='block'"></div>
+				<div id="mastHover" title="Click for Websocket Statistics" onclick="showMetrics()"><img src="images/stats-26.png"/></div>
+				<div id="mastScript" title="Click for Instructions on Running this Demo" onclick="document.getElementById('scriptWindow').style.display='block'"><img src="images/HowtoPNG-26.png"/></div>
 				<section id="metricsWindow">
 					<h3 class="inline">Websocket Statistics:</h3>
 					<div class="unsubscribe" title="Close" onclick="hideMetrics(this.parentNode);"></div>
@@ -373,7 +392,7 @@
 									Drag this window to the side
 								</li>
 								<li>
-									If you would like to view websocket statistics, click on the ideograph in the Kaazing logo at top right; drag the Metrics window to a convenient location
+									If you would like to view websocket statistics, click on the icon with charts at top right; drag the Metrics window to a convenient location
 								</li>
 								<li>
 									Drag up to 8 currency pairs (one at a time) from the two columns at top left and drop each into "Currency Pairs"
