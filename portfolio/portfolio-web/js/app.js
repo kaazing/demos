@@ -9,8 +9,9 @@ angular.module("portfolio-demo", [])
 			url: "ws://localhost:8000/jms",
 			topicName:"/topic/portfolioStock"
 		}
+		console.log("URL" + $location.host());
 		if ($location.host()!="localhost"){
-			$scope.connectionInfo.url="wss://"+$location.host()+"/jms";
+			$scope.connectionInfo.url="ws://"+$location.host()+":8000/jms";
 		}
 		$scope.stockArray=new Array();
 		$scope.stocks=[
