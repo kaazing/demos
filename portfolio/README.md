@@ -7,11 +7,11 @@ This demo application uses WebSocket to update stock price information in real-t
 
 To start this demo follow these steps:
 
-*Prerequisite is that you have the Kaazing Websocket Gateway and ActiveMQ up and running (more information [here](https://kaazing.com/doc/5.0/about/setup-guide/index.html))* 
+**Prerequisite is that you have the Kaazing Websocket Gateway and ActiveMQ up and running (more information [here](https://kaazing.com/doc/5.0/about/setup-guide/index.html))**
 
 1. Install gradle folow the steps [here](https://gradle.org/gradle-download/?_ga=1.147510451.589111043.1485507259);
-2. Install NodeJS for Linux go [here](https://nodejs.org/en/download/package-manager/), For Windows and use the installers [here](https://nodejs.org/en/download/) *You need both NodeJS and NPM*
-3. Navigate in the terminal/command line to where you cloned the demos and to the /portfolio folder (ex: ~/demos/portfolio);
+2. Install NodeJS for Linux go [here](https://nodejs.org/en/download/package-manager/), For Windows and MacOS use the installers [here](https://nodejs.org/en/download/) **You need both NodeJS and NPM**
+3. Navigate in the terminal/command line to where you cloned the kaazing demos repository and to the /portfolio folder (ex: ~/demos/portfolio);
 4. Navigate to ~/demos/portfolio/stock-trading-service/ and run *gradle installDist*;
 5. Navigate to /stock-trading-service/build/install/stock-trading-service/bin. Here you can find for Linux Distribuition/MacOS a script "stock-trading-service" and for Windows a bat "stock-trading-service.bat";
 6. Run the script/bat that fits your environmnet by doing "./stock-trading-service" or "stock-trading-service.bat";
