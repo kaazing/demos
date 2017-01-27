@@ -1,6 +1,6 @@
 // Server code run with node.js
 var express = require('express');
-var uri = 'localhost'
+var uri = 'localhost';
 var port = 3000;
 var app = express();
 var http = require('http').Server(app);
