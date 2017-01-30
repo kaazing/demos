@@ -21,7 +21,7 @@ This demo application uses WebSocket to update stock price information in real-t
 1. Run the script/batch file that fits your environment by running:  
   for Linux/MacOS - **./stock-trading-service**  
   for Windows - **.\stock-trading-service.bat**  
-**NOTE** - If your ActiveMQ is **NOT** listening to **tcp://localhost:61616**, when you run the script in the step above, you will have pass the URL that your ActiveMQ is listening to as the first parameter of the script, i.e.:  
+**NOTE** - If your ActiveMQ is **NOT** listening to **tcp://localhost:61616**, when you run the script in the step above, you will have to pass the URL that your ActiveMQ is listening to as the first parameter of the script, i.e.:  
   for Linux/MacOS - **./stock-trading-service tcp://{ACTIVEMQ.IP}:{ACTIVEMQ.PORT}**  
   for Windows - **.\stock-trading-service.bat tcp://{ACTIVEMQ.IP}:{ACTIVEMQ.PORT}**
 replacing the variables shown above:  
