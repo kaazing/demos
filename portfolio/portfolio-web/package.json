@@ -17,6 +17,7 @@
   "author": "Kaazing Corporation",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.13.4",
     "angular": "^1.5.7",
     "bootstrap": "^3.3.6",
     "kaazing-javascript-jms-client": "^4.4.2"

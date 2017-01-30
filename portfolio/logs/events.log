@@ -1,0 +1,53 @@
+Getting initial stock values...
+Ready to run...
+* ======================================
+* Kaazing Stock Portfolio Demo
+* Connecting on tcp://localhost:61616
+* ======================================
+Sending: WireFormatInfo { version=11, properties={TcpNoDelayEnabled=true, SizePrefixDisabled=false, CacheSize=1024, StackTraceEnabled=true, CacheEnabled=true, TightEncodingEnabled=true, MaxFrameSize=9223372036854775807, Host=localhost, MaxInactivityDuration=30000, MaxInactivityDurationInitalDelay=10000}, magic=[A,c,t,i,v,e,M,Q]}
+Using min of local: WireFormatInfo { version=11, properties={TcpNoDelayEnabled=true, SizePrefixDisabled=false, CacheSize=1024, StackTraceEnabled=true, CacheEnabled=true, TightEncodingEnabled=true, MaxFrameSize=9223372036854775807, Host=localhost, MaxInactivityDuration=30000, MaxInactivityDurationInitalDelay=10000}, magic=[A,c,t,i,v,e,M,Q]} and remote: WireFormatInfo { version=11, properties={TcpNoDelayEnabled=true, SizePrefixDisabled=false, CacheSize=1024, StackTraceEnabled=true, CacheEnabled=true, TightEncodingEnabled=true, MaxFrameSize=104857600, MaxInactivityDuration=30000, MaxInactivityDurationInitalDelay=10000}, magic=[A,c,t,i,v,e,M,Q]}
+Received WireFormat: WireFormatInfo { version=11, properties={TcpNoDelayEnabled=true, SizePrefixDisabled=false, CacheSize=1024, StackTraceEnabled=true, CacheEnabled=true, TightEncodingEnabled=true, MaxFrameSize=104857600, MaxInactivityDuration=30000, MaxInactivityDurationInitalDelay=10000}, magic=[A,c,t,i,v,e,M,Q]}
+tcp://localhost/127.0.0.1:61616@54084 before negotiation: OpenWireFormat{version=11, cacheEnabled=false, stackTraceEnabled=false, tightEncodingEnabled=false, sizePrefixDisabled=false, maxFrameSize=9223372036854775807}
+tcp://localhost/127.0.0.1:61616@54084 after negotiation: OpenWireFormat{version=11, cacheEnabled=true, stackTraceEnabled=true, tightEncodingEnabled=true, sizePrefixDisabled=false, maxFrameSize=104857600}
+Resetting the value of 3m Co based on the min/max.
+Resetting the value of 3m Co based on the min/max.
+Resetting the value of 3m Co based on the min/max.
+Resetting the value of 3m Co based on the min/max.
+Resetting the value of 3m Co based on the min/max.
+Resetting the value of 3m Co based on the min/max.
+Resetting the value of 3m Co based on the min/max.
+Resetting the value of 3m Co based on the min/max.
+Resetting the value of International Business Machines based on the min/max.
+Resetting the value of International Business Machines based on the min/max.
+Resetting the value of Hewlett-Packard Co. based on the counter.
+WriteChecker: 10000ms elapsed since last write check.
+Resetting the value of International Business Machines based on the min/max.
+Resetting the value of International Business Machines based on the min/max.
+Resetting the value of International Business Machines based on the min/max.
+Initialized TaskRunnerFactory[ActiveMQ Session Task] using ExecutorService: java.util.concurrent.ThreadPoolExecutor@612f17f[Running, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0]
+WriteChecker: 10000ms elapsed since last write check.
+Resetting the value of Verizon Communications based on the counter.
+30000ms elapsed since last read check.
+WriteChecker: 10000ms elapsed since last write check.
+Resetting the value of Boeing Co. based on the counter.
+WriteChecker: 10000ms elapsed since last write check.
+Resetting the value of Verizon Communications based on the counter.
+WriteChecker: 10000ms elapsed since last write check.
+Resetting the value of Verizon Communications based on the counter.
+30000ms elapsed since last read check.
+WriteChecker: 10000ms elapsed since last write check.
+Resetting the value of Verizon Communications based on the counter.
+WriteChecker: 10000ms elapsed since last write check.
+Resetting the value of Microsoft Corporation based on the counter.
+WriteChecker: 10000ms elapsed since last write check.
+Resetting the value of Boeing Co. based on the min/max.
+Resetting the value of Wal-Mart Stores, Inc. based on the counter.
+30000ms elapsed since last read check.
+WriteChecker: 10000ms elapsed since last write check.
+Resetting the value of Hewlett-Packard Co. based on the counter.
+WriteChecker: 10001ms elapsed since last write check.
+WriteChecker: 10000ms elapsed since last write check.
+Resetting the value of AT&T Inc. based on the counter.
+30000ms elapsed since last read check.
+WriteChecker: 10000ms elapsed since last write check.
+Resetting the value of McDonald's Corporation based on the counter.
