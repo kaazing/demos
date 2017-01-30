@@ -9,17 +9,35 @@ This demo application uses WebSocket to update stock price information in real-t
 
 **Prerequisite is that you have the Kaazing Websocket Gateway and ActiveMQ up and running (more information [here](https://kaazing.com/doc/5.0/about/setup-guide/index.html))**
 
-1. Install gradle folow the steps [here](https://gradle.org/gradle-download/?_ga=1.147510451.589111043.1485507259);
-2. Install NodeJS for Linux go [here](https://nodejs.org/en/download/package-manager/), For Windows and MacOS use the installers [here](https://nodejs.org/en/download/) **You need both NodeJS and NPM**
-3. Navigate in the terminal/command line to where you cloned the kaazing demos repository and to the /portfolio folder (ex: ~/demos/portfolio);
-4. Navigate to ~/demos/portfolio/stock-trading-service/ and run **gradle installDist**;
-5. Navigate to /stock-trading-service/build/install/stock-trading-service/bin. Here you can find for Linux Distribuition/MacOS a script "stock-trading-service" and for Windows a bat "stock-trading-service.bat";
-6. Run the script/bat that fits your environmnet by doing "./stock-trading-service" or "stock-trading-service.bat";
-7. If your ActiveMQ is **NOT** listening to tcp://localhost:61616 you will have to give the script as the first parameter the URL that your ActiveMQ is listening to ex: "./stock-trading-service tcp://{ACTIVEMQ.IP}:{ACTIVEMQ.PORT}" .Now the ticker that fetched and post the stock data has successfully started!;
-8. Navigate to ~/demos/portfolio/portfolio-web/ and run **npm install** to resolve needed dependencie;
-9. If your gateway is **NOT** accepting JMS connections on "ws://localhost:8000/jms" you will have to edit this file: ~/demos/portfolio/portfolio-web/server.js. You have to edit line 3 : "uri: 'localhost' to url: '"'{GATEWAY.IP}';
-10. Now in ~/demos/portfolio/portfolio-web/ run **node server.js**;
-11. Now you are done and you can access either localhost:3000 or {GATEWAY.IP}:3000!
+1. Install gradle: follow the steps [here](https://gradle.org/gradle-download/?_ga=1.147510451.589111043.1485507259).
+1. Install NodeJS: for Linux, go [here](https://nodejs.org/en/download/package-manager/), and for Windows and MacOS use the installers [here](https://nodejs.org/en/download/).  
+**You need both NodeJS and NPM**.
+1. Navigate in the terminal/command line to where you cloned the kaazing demos repository and to the /portfolio folder (ex: ~/demos/portfolio).
+1. Navigate to ~/demos/portfolio/stock-trading-service/ and run:  
+  **gradle installDist**.
+1. Navigate to /stock-trading-service/build/install/stock-trading-service/bin. Here you can find:  
+  for Linux Distribuition/MacOS, a script, **stock-trading-service**.  
+  for Windows, a batch file, **stock-trading-service.bat**.
+1. Run the script/batch file that fits your environment by running:  
+  for Linux/MacOS - **./stock-trading-service**  
+  for Windows - **.\stock-trading-service.bat**  
+**NOTE** - If your ActiveMQ is **NOT** listening to **tcp://localhost:61616**, when you run the script in the step above, you will have pass the URL that your ActiveMQ is listening to as the first parameter of the script, i.e.:  
+  for Linux/MacOS - **./stock-trading-service tcp://{ACTIVEMQ.IP}:{ACTIVEMQ.PORT}**  
+  for Windows - **.\stock-trading-service.bat tcp://{ACTIVEMQ.IP}:{ACTIVEMQ.PORT}**
+replacing the variables shown above:  
+  replace **{ACTIVEMQ.IP}** with the IP address of your ActiveMQ server.  
+  replace **{ACTIVEMQ.PORT}** with the port on which it is listening.  
+With that, the ticker that fetches and posts the stock data should have started successfully.
+1. Navigate to ~/demos/portfolio/portfolio-web/ and run, to resolve needed depencencies:  
+  **npm install**
+1. If your gateway is **NOT** accepting JMS connections on **ws://localhost:8000/jms**, you will have to edit this file:  
+~/demos/portfolio/portfolio-web/server.js. You have to edit line 3:  
+  change **uri: 'localhost'** to **uri: '"'{GATEWAY.IP}'**.
+1. Now in ~/demos/portfolio/portfolio-web/, run:  
+  **node server.js**.
+1. Now you are done. Depending on how you configured above, you can access the demo at either:  
+  **http://localhost:3000** or **http://{GATEWAY.IP}:3000**.  
+Enjoy!
  
 To start building your own application with Kaazing Websocket Gateway, visit our [Getting Started](https://kaazing.com/getting-started/) page. </br>
 
