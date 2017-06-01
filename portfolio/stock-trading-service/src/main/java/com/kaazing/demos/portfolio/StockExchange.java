@@ -15,7 +15,7 @@ public class StockExchange {
 
 	private static final float FLUCTUATION_PERCENT = 0.01F;
 	private static final int MIN_VALUE_PENNIES = 10;
-	private static final int MAX_VALUE_PENNIES = 18000;
+	private static final int MAX_VALUE_PENNIES = 30000;
 
 	private Random _random;
 	private List<Stock> stocks;
@@ -26,17 +26,17 @@ public class StockExchange {
 	public StockExchange() throws IOException {
 		logger.info("Getting initial stock values...");
 		stocks = new ArrayList<Stock>();
-		stocks.add(new Stock("3m Co", "MMM", YahooFinance.get("MMM").getQuote().getPrice().floatValue()));
-		stocks.add(new Stock("AT&T Inc.", "T", YahooFinance.get("T").getQuote().getPrice().floatValue()));
+		stocks.add(new Stock("Twitter Inc", "TWTR", YahooFinance.get("TWTR").getQuote().getPrice().floatValue()));
+		stocks.add(new Stock("Facebook", "FB", YahooFinance.get("FB").getQuote().getPrice().floatValue()));
 		stocks.add(new Stock("Boeing Co.", "BA", YahooFinance.get("BA").getQuote().getPrice().floatValue()));
 		stocks.add(new Stock("Citigroup, Inc.", "C", YahooFinance.get("C").getQuote().getPrice().floatValue()));
-		stocks.add(new Stock("Hewlett-Packard Co.", "HPQ", YahooFinance.get("HPQ").getQuote().getPrice().floatValue()));
+		stocks.add(new Stock("Tesla", "TSLA", YahooFinance.get("TSLA").getQuote().getPrice().floatValue()));
 		stocks.add(new Stock("Intel Corporation", "INTC", YahooFinance.get("INTC").getQuote().getPrice().floatValue()));
-		stocks.add(new Stock("International Business Machines", "IBM", YahooFinance.get("IBM").getQuote().getPrice().floatValue()));
-		stocks.add(new Stock("McDonald's Corporation", "MCD", YahooFinance.get("MCD").getQuote().getPrice().floatValue()));
+		stocks.add(new Stock("Comcast", "CMCSA", YahooFinance.get("CMCSA").getQuote().getPrice().floatValue()));
+		stocks.add(new Stock("Broadcom", "AVGO", YahooFinance.get("AVGO").getQuote().getPrice().floatValue()));
 		stocks.add(new Stock("Microsoft Corporation", "MSFT", YahooFinance.get("MSFT").getQuote().getPrice().floatValue()));
 		stocks.add(new Stock("Verizon Communications", "VZ", YahooFinance.get("VZ").getQuote().getPrice().floatValue()));
-		stocks.add(new Stock("Wal-Mart Stores, Inc.", "WMT", YahooFinance.get("WMT").getQuote().getPrice().floatValue()));
+		stocks.add(new Stock("Apple Inc", "AAPL", YahooFinance.get("AAPL").getQuote().getPrice().floatValue()));
 		logger.info("Ready to run...");
 		_random = new SecureRandom(new SecureRandom().generateSeed(20));
 	}
