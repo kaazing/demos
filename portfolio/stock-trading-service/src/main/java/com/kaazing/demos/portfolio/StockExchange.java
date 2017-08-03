@@ -15,7 +15,7 @@ public class StockExchange {
 
 	private static final float FLUCTUATION_PERCENT = 0.01F;
 	private static final int MIN_VALUE_PENNIES = 10;
-	private static final int MAX_VALUE_PENNIES = 30000;
+	private static final int MAX_VALUE_PENNIES = 100000;
 
 	private Random _random;
 	private List<Stock> stocks;
