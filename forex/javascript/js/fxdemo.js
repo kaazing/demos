@@ -442,7 +442,34 @@ window.onresize = function () {
 	if (widgetList['USDXAG']) {widgetList['USDXAG'].repaint;}
 	metricCnt.showStatus('Charts re-drawn.');
 }*/
+
+function handleConnect(message) {
+	console.log(message)
+	/* comment out for local testing */
+	//document.body.style.cursor = 'progress';
+	metricCnt.showStatus('Opening websockets...');
+	wsCtl.init(); //Kaazing websocket initializer
+	metricCnt.showStatus('Connection pending...');
+// end testing
+	initMarketWatch();
+}
+
+$("#connect").click(function() { 
+	handleConnect("Connection starting!!");
+	connect.disabled=true;
+	disconnect.disabled=false;
+});
+
+$("#disconnect").click(function() { 
+	disconnect.disabled=true;
+	connect.disabled=false;
+	wsCtl.close();
+	
+});
+
 $(document).ready(function() {
+	connect.disabled = false;
+	disconnect.disabled = false;
 	fxClk.set();
 	fxClk.timer = setInterval(fxClk.update, 1000);
 	attachDnDEvents();
@@ -459,13 +486,7 @@ $(document).ready(function() {
 			});
 		}
 	document.getElementById('rateSelect').msgRate[1].checked = true; // resets needed for Firefox reload
-/* comment out for local testing */
-	document.body.style.cursor = 'progress';
-	metricCnt.showStatus('Opening websockets...');
-	wsCtl.init(); //Kaazing websocket initializer
-	metricCnt.showStatus('Connection pending...');
-// end testing
-	initMarketWatch();
+
 	
 });
 $(document).unload(function() {
@@ -1205,10 +1226,8 @@ function executionHistory(serverData, symbol) { // to allow a diffeent column se
 	| websocket connections adapted from Richard Clark's portfolio-completed.html		|
 	|-----------------------------------------------------------------------------------|
 */
-var wsUrl = makeURL ('jms', 'wss');
-if (location.hostname==="localhost"){
-	wsUrl="ws://localhost:8000/jms";
-}
+var wsUrl = $('#locationUrl').attr('value');
+
 var wsCtl = { //Kaazing Websocket control structure, isolate from naming conflicts via this object
 	debug : 			true,
 	fxDebug:			true,
@@ -1222,9 +1241,11 @@ var wsCtl = { //Kaazing Websocket control structure, isolate from naming conflic
 	responseConsumer :	null,
 	firstTopic :		null,
 	init :				function() {
-								if (wsCtl.fxDebug) console.log('url == ' + wsCtl.url);
-							var jmsConnectionFactory = new JmsConnectionFactory(wsCtl.url);
-								if (wsCtl.fxDebug) console.log(jmsConnectionFactory);
+								url = wsUrl;
+								if (wsCtl.fxDebug) console.log('url == ' + url);
+							var jmsConnectionFactory = new JmsConnectionFactory(url);
+
+								//if (wsCtl.fxDebug) console.log("TEST : " + jmsConnectionFactory);
 							var connectionFuture = jmsConnectionFactory.createConnection('','',function() {
 							  try {
 								wsCtl.connection = connectionFuture.getValue();
@@ -1264,6 +1285,13 @@ var wsCtl = { //Kaazing Websocket control structure, isolate from naming conflic
 								fxErr.popAlert(1, 4, ' (' + e.message + ')');
 								document.body.style.cursor = 'default';
 								}
+							});
+						},
+	close: 				function(){
+							console.log("Disconnecting!");
+							wsCtl.connection.close(function () {
+								console.log("CONNECTION CLOSED");
+								updateConnectionButtons(false);
 							});
 						}
 };		

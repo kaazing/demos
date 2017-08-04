@@ -1,4 +1,5 @@
-var io=require('./node/socketioalt.js')('amqp://localhost:5672');
+var amqpURL='amqp://localhost:5672';
+var io=require('./node/socketioalt.js')(amqpURL);
 var express=require('express');
 var app = express();
 var http = require('http').Server(app);
